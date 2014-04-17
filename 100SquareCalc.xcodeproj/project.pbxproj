@@ -22,6 +22,7 @@
 		E935ABF018FFBCD600A48214 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E935ABCF18FFBCD500A48214 /* UIKit.framework */; };
 		E935ABF818FFBCD600A48214 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E935ABF618FFBCD600A48214 /* InfoPlist.strings */; };
 		E935ABFA18FFBCD600A48214 /* _00SquareCalcTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E935ABF918FFBCD600A48214 /* _00SquareCalcTests.m */; };
+		E935AC0518FFBDD800A48214 /* MMKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = E935AC0418FFBDD800A48214 /* MMKeyboard.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,8 @@
 		E935ABF518FFBCD600A48214 /* 100SquareCalcTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "100SquareCalcTests-Info.plist"; sourceTree = "<group>"; };
 		E935ABF718FFBCD600A48214 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E935ABF918FFBCD600A48214 /* _00SquareCalcTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = _00SquareCalcTests.m; sourceTree = "<group>"; };
+		E935AC0318FFBDD800A48214 /* MMKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMKeyboard.h; sourceTree = "<group>"; };
+		E935AC0418FFBDD800A48214 /* MMKeyboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMKeyboard.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +123,8 @@
 				E935ABE018FFBCD500A48214 /* Main_iPad.storyboard */,
 				E935ABE318FFBCD500A48214 /* TKBViewController.h */,
 				E935ABE418FFBCD500A48214 /* TKBViewController.m */,
+				E935AC0318FFBDD800A48214 /* MMKeyboard.h */,
+				E935AC0418FFBDD800A48214 /* MMKeyboard.m */,
 				E935ABE618FFBCD500A48214 /* Images.xcassets */,
 				E935ABD218FFBCD500A48214 /* Supporting Files */,
 			);
@@ -255,6 +260,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E935ABDC18FFBCD500A48214 /* TKBAppDelegate.m in Sources */,
+				E935AC0518FFBDD800A48214 /* MMKeyboard.m in Sources */,
 				E935ABD818FFBCD500A48214 /* main.m in Sources */,
 				E935ABE518FFBCD500A48214 /* TKBViewController.m in Sources */,
 			);
@@ -471,6 +477,7 @@
 				E935ABFF18FFBCD600A48214 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		E935AC0018FFBCD600A48214 /* Build configuration list for PBXNativeTarget "100SquareCalcTests" */ = {
 			isa = XCConfigurationList;
@@ -479,6 +486,7 @@
 				E935AC0218FFBCD600A48214 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
