@@ -1,0 +1,486 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		E935ABCC18FFBCD500A48214 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E935ABCB18FFBCD500A48214 /* Foundation.framework */; };
+		E935ABCE18FFBCD500A48214 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E935ABCD18FFBCD500A48214 /* CoreGraphics.framework */; };
+		E935ABD018FFBCD500A48214 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E935ABCF18FFBCD500A48214 /* UIKit.framework */; };
+		E935ABD618FFBCD500A48214 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E935ABD418FFBCD500A48214 /* InfoPlist.strings */; };
+		E935ABD818FFBCD500A48214 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E935ABD718FFBCD500A48214 /* main.m */; };
+		E935ABDC18FFBCD500A48214 /* TKBAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E935ABDB18FFBCD500A48214 /* TKBAppDelegate.m */; };
+		E935ABDF18FFBCD500A48214 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E935ABDD18FFBCD500A48214 /* Main_iPhone.storyboard */; };
+		E935ABE218FFBCD500A48214 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E935ABE018FFBCD500A48214 /* Main_iPad.storyboard */; };
+		E935ABE518FFBCD500A48214 /* TKBViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E935ABE418FFBCD500A48214 /* TKBViewController.m */; };
+		E935ABE718FFBCD500A48214 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E935ABE618FFBCD500A48214 /* Images.xcassets */; };
+		E935ABEE18FFBCD600A48214 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E935ABED18FFBCD600A48214 /* XCTest.framework */; };
+		E935ABEF18FFBCD600A48214 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E935ABCB18FFBCD500A48214 /* Foundation.framework */; };
+		E935ABF018FFBCD600A48214 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E935ABCF18FFBCD500A48214 /* UIKit.framework */; };
+		E935ABF818FFBCD600A48214 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E935ABF618FFBCD600A48214 /* InfoPlist.strings */; };
+		E935ABFA18FFBCD600A48214 /* _00SquareCalcTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E935ABF918FFBCD600A48214 /* _00SquareCalcTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		E935ABF118FFBCD600A48214 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E935ABC018FFBCD500A48214 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E935ABC718FFBCD500A48214;
+			remoteInfo = 100SquareCalc;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		E935ABC818FFBCD500A48214 /* 100SquareCalc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = 100SquareCalc.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E935ABCB18FFBCD500A48214 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		E935ABCD18FFBCD500A48214 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		E935ABCF18FFBCD500A48214 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		E935ABD318FFBCD500A48214 /* 100SquareCalc-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "100SquareCalc-Info.plist"; sourceTree = "<group>"; };
+		E935ABD518FFBCD500A48214 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		E935ABD718FFBCD500A48214 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		E935ABD918FFBCD500A48214 /* 100SquareCalc-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "100SquareCalc-Prefix.pch"; sourceTree = "<group>"; };
+		E935ABDA18FFBCD500A48214 /* TKBAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TKBAppDelegate.h; sourceTree = "<group>"; };
+		E935ABDB18FFBCD500A48214 /* TKBAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TKBAppDelegate.m; sourceTree = "<group>"; };
+		E935ABDE18FFBCD500A48214 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
+		E935ABE118FFBCD500A48214 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
+		E935ABE318FFBCD500A48214 /* TKBViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TKBViewController.h; sourceTree = "<group>"; };
+		E935ABE418FFBCD500A48214 /* TKBViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TKBViewController.m; sourceTree = "<group>"; };
+		E935ABE618FFBCD500A48214 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		E935ABEC18FFBCD600A48214 /* 100SquareCalcTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = 100SquareCalcTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E935ABED18FFBCD600A48214 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		E935ABF518FFBCD600A48214 /* 100SquareCalcTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "100SquareCalcTests-Info.plist"; sourceTree = "<group>"; };
+		E935ABF718FFBCD600A48214 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		E935ABF918FFBCD600A48214 /* _00SquareCalcTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = _00SquareCalcTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E935ABC518FFBCD500A48214 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E935ABCE18FFBCD500A48214 /* CoreGraphics.framework in Frameworks */,
+				E935ABD018FFBCD500A48214 /* UIKit.framework in Frameworks */,
+				E935ABCC18FFBCD500A48214 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E935ABE918FFBCD600A48214 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E935ABEE18FFBCD600A48214 /* XCTest.framework in Frameworks */,
+				E935ABF018FFBCD600A48214 /* UIKit.framework in Frameworks */,
+				E935ABEF18FFBCD600A48214 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		E935ABBF18FFBCD500A48214 = {
+			isa = PBXGroup;
+			children = (
+				E935ABD118FFBCD500A48214 /* 100SquareCalc */,
+				E935ABF318FFBCD600A48214 /* 100SquareCalcTests */,
+				E935ABCA18FFBCD500A48214 /* Frameworks */,
+				E935ABC918FFBCD500A48214 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		E935ABC918FFBCD500A48214 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E935ABC818FFBCD500A48214 /* 100SquareCalc.app */,
+				E935ABEC18FFBCD600A48214 /* 100SquareCalcTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E935ABCA18FFBCD500A48214 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E935ABCB18FFBCD500A48214 /* Foundation.framework */,
+				E935ABCD18FFBCD500A48214 /* CoreGraphics.framework */,
+				E935ABCF18FFBCD500A48214 /* UIKit.framework */,
+				E935ABED18FFBCD600A48214 /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E935ABD118FFBCD500A48214 /* 100SquareCalc */ = {
+			isa = PBXGroup;
+			children = (
+				E935ABDA18FFBCD500A48214 /* TKBAppDelegate.h */,
+				E935ABDB18FFBCD500A48214 /* TKBAppDelegate.m */,
+				E935ABDD18FFBCD500A48214 /* Main_iPhone.storyboard */,
+				E935ABE018FFBCD500A48214 /* Main_iPad.storyboard */,
+				E935ABE318FFBCD500A48214 /* TKBViewController.h */,
+				E935ABE418FFBCD500A48214 /* TKBViewController.m */,
+				E935ABE618FFBCD500A48214 /* Images.xcassets */,
+				E935ABD218FFBCD500A48214 /* Supporting Files */,
+			);
+			path = 100SquareCalc;
+			sourceTree = "<group>";
+		};
+		E935ABD218FFBCD500A48214 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				E935ABD318FFBCD500A48214 /* 100SquareCalc-Info.plist */,
+				E935ABD418FFBCD500A48214 /* InfoPlist.strings */,
+				E935ABD718FFBCD500A48214 /* main.m */,
+				E935ABD918FFBCD500A48214 /* 100SquareCalc-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		E935ABF318FFBCD600A48214 /* 100SquareCalcTests */ = {
+			isa = PBXGroup;
+			children = (
+				E935ABF918FFBCD600A48214 /* _00SquareCalcTests.m */,
+				E935ABF418FFBCD600A48214 /* Supporting Files */,
+			);
+			path = 100SquareCalcTests;
+			sourceTree = "<group>";
+		};
+		E935ABF418FFBCD600A48214 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				E935ABF518FFBCD600A48214 /* 100SquareCalcTests-Info.plist */,
+				E935ABF618FFBCD600A48214 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E935ABC718FFBCD500A48214 /* 100SquareCalc */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E935ABFD18FFBCD600A48214 /* Build configuration list for PBXNativeTarget "100SquareCalc" */;
+			buildPhases = (
+				E935ABC418FFBCD500A48214 /* Sources */,
+				E935ABC518FFBCD500A48214 /* Frameworks */,
+				E935ABC618FFBCD500A48214 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = 100SquareCalc;
+			productName = 100SquareCalc;
+			productReference = E935ABC818FFBCD500A48214 /* 100SquareCalc.app */;
+			productType = "com.apple.product-type.application";
+		};
+		E935ABEB18FFBCD600A48214 /* 100SquareCalcTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E935AC0018FFBCD600A48214 /* Build configuration list for PBXNativeTarget "100SquareCalcTests" */;
+			buildPhases = (
+				E935ABE818FFBCD600A48214 /* Sources */,
+				E935ABE918FFBCD600A48214 /* Frameworks */,
+				E935ABEA18FFBCD600A48214 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E935ABF218FFBCD600A48214 /* PBXTargetDependency */,
+			);
+			name = 100SquareCalcTests;
+			productName = 100SquareCalcTests;
+			productReference = E935ABEC18FFBCD600A48214 /* 100SquareCalcTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E935ABC018FFBCD500A48214 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = TKB;
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = "University of Tsukuba";
+				TargetAttributes = {
+					E935ABEB18FFBCD600A48214 = {
+						TestTargetID = E935ABC718FFBCD500A48214;
+					};
+				};
+			};
+			buildConfigurationList = E935ABC318FFBCD500A48214 /* Build configuration list for PBXProject "100SquareCalc" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = E935ABBF18FFBCD500A48214;
+			productRefGroup = E935ABC918FFBCD500A48214 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E935ABC718FFBCD500A48214 /* 100SquareCalc */,
+				E935ABEB18FFBCD600A48214 /* 100SquareCalcTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E935ABC618FFBCD500A48214 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E935ABE218FFBCD500A48214 /* Main_iPad.storyboard in Resources */,
+				E935ABE718FFBCD500A48214 /* Images.xcassets in Resources */,
+				E935ABDF18FFBCD500A48214 /* Main_iPhone.storyboard in Resources */,
+				E935ABD618FFBCD500A48214 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E935ABEA18FFBCD600A48214 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E935ABF818FFBCD600A48214 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E935ABC418FFBCD500A48214 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E935ABDC18FFBCD500A48214 /* TKBAppDelegate.m in Sources */,
+				E935ABD818FFBCD500A48214 /* main.m in Sources */,
+				E935ABE518FFBCD500A48214 /* TKBViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E935ABE818FFBCD600A48214 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E935ABFA18FFBCD600A48214 /* _00SquareCalcTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		E935ABF218FFBCD600A48214 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E935ABC718FFBCD500A48214 /* 100SquareCalc */;
+			targetProxy = E935ABF118FFBCD600A48214 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		E935ABD418FFBCD500A48214 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E935ABD518FFBCD500A48214 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		E935ABDD18FFBCD500A48214 /* Main_iPhone.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E935ABDE18FFBCD500A48214 /* Base */,
+			);
+			name = Main_iPhone.storyboard;
+			sourceTree = "<group>";
+		};
+		E935ABE018FFBCD500A48214 /* Main_iPad.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E935ABE118FFBCD500A48214 /* Base */,
+			);
+			name = Main_iPad.storyboard;
+			sourceTree = "<group>";
+		};
+		E935ABF618FFBCD600A48214 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E935ABF718FFBCD600A48214 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		E935ABFB18FFBCD600A48214 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		E935ABFC18FFBCD600A48214 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		E935ABFE18FFBCD600A48214 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "100SquareCalc/100SquareCalc-Prefix.pch";
+				INFOPLIST_FILE = "100SquareCalc/100SquareCalc-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		E935ABFF18FFBCD600A48214 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "100SquareCalc/100SquareCalc-Prefix.pch";
+				INFOPLIST_FILE = "100SquareCalc/100SquareCalc-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		E935AC0118FFBCD600A48214 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/100SquareCalc.app/100SquareCalc";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "100SquareCalc/100SquareCalc-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "100SquareCalcTests/100SquareCalcTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		E935AC0218FFBCD600A48214 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/100SquareCalc.app/100SquareCalc";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "100SquareCalc/100SquareCalc-Prefix.pch";
+				INFOPLIST_FILE = "100SquareCalcTests/100SquareCalcTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E935ABC318FFBCD500A48214 /* Build configuration list for PBXProject "100SquareCalc" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E935ABFB18FFBCD600A48214 /* Debug */,
+				E935ABFC18FFBCD600A48214 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E935ABFD18FFBCD600A48214 /* Build configuration list for PBXNativeTarget "100SquareCalc" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E935ABFE18FFBCD600A48214 /* Debug */,
+				E935ABFF18FFBCD600A48214 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		E935AC0018FFBCD600A48214 /* Build configuration list for PBXNativeTarget "100SquareCalcTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E935AC0118FFBCD600A48214 /* Debug */,
+				E935AC0218FFBCD600A48214 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E935ABC018FFBCD500A48214 /* Project object */;
+}
