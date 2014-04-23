@@ -9,17 +9,31 @@
 #import "MMKeyboard.h"
 
 @implementation MMKeyboard
-
--(id)initWithRow:(int)row Column:(int)column Items:(NSMutableArray *)items viewRect:(CGRect)viewRect action:(SEL)action fontSize:(CGFloat)fontSize normalColor:(UIColor *)normalColor disabledColor:(UIColor *)disabledColor
 {
+    NSMutableArray *buttons;
+}
+
+-(id)initWithRow:(int)row Column:(int)column Items:(NSMutableArray *)items viewRect:(CGRect)viewRect fontSize:(CGFloat)fontSize normalColor:(UIColor *)normalColor disabledColor:(UIColor *)disabledColor
+{
+    // remove all buttons from view and array
+	if (buttons) {
+		for (_aButton in buttons) {
+			[_aButton removeFromSuperview];
+		}
+		[buttons removeAllObjects];
+	} else {
+		buttons = [NSMutableArray array];
+	}
+    
     self = [super init];
-    self.KeyboardButtons = [NSMutableArray array];
     self.frame = viewRect;
+    CGSize buttonSize = CGSizeMake(self.frame.size.width / column, self.frame.size.height / row);
+    
     for (int i = 0; i < [items count]; i++) {
         UIButton *aButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        aButton.frame = CGRectMake(self.frame.size.width / column * (i % column), self.frame.size.height / row * (i / column), self.frame.size.width / column, self.frame.size.height / row);
+        aButton.frame = CGRectMake(self.frame.size.width / column * (i % column), self.frame.size.height / row * (i / column), buttonSize.width , buttonSize.height);
         [aButton setTitle:items[i] forState:UIControlStateNormal];
-        [aButton addTarget:self action:@selector(action) forControlEvents:UIControlEventTouchUpInside];
+        [aButton addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
         aButton.titleLabel.font = [UIFont boldSystemFontOfSize:fontSize];
         aButton.titleLabel.adjustsFontSizeToFitWidth = YES;
         [aButton setTitleColor:normalColor forState:UIControlStateNormal];
@@ -27,12 +41,17 @@
         if ([items[i] isEqualToString:@""]) {
             aButton.enabled = NO;
         }
-        
-        [self.KeyboardButtons addObject:aButton];
+        [buttons addObject:aButton];
         [self addSubview:aButton];
     }
-    
+    self.KeyboardButtons = buttons;
     return self;
+}
+
+
+- (void)buttonPressed:(id)sender
+{
+    [_delegate keyboradReact:sender];
 }
 
 

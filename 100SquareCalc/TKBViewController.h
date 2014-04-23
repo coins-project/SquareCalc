@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MMKeyboard.h"
+#import "MMSquareCalc.h"
 
-@interface TKBViewController : UIViewController
+@interface TKBViewController : UIViewController<MMKeyboardDelegate, MMSquareCalcDelegate>
+
 
 @end

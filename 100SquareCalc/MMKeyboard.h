@@ -8,10 +8,19 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol MMKeyboardDelegate <NSObject>
+
+- (void)keyboradReact:(id)sender;
+
+
+@end
+
 @interface MMKeyboard : UIView
 
-- (id)initWithRow:(int)row Column:(int)column Items:(NSMutableArray *)items viewRect:(CGRect)viewRect action:(SEL)action fontSize:(CGFloat)fontSize normalColor:(UIColor *)normalColor disabledColor:(UIColor*)disabledColor;
+- (id)initWithRow:(int)row Column:(int)column Items:(NSMutableArray *)items viewRect:(CGRect)viewRect fontSize:(CGFloat)fontSize normalColor:(UIColor *)normalColor disabledColor:(UIColor*)disabledColor;
 
+@property(nonatomic, assign) id<MMKeyboardDelegate> delegate;
 @property(weak, nonatomic) NSMutableArray *KeyboardButtons;
+@property UIButton *aButton;
 
 @end

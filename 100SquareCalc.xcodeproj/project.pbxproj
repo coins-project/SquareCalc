@@ -23,6 +23,7 @@
 		E935ABF818FFBCD600A48214 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E935ABF618FFBCD600A48214 /* InfoPlist.strings */; };
 		E935ABFA18FFBCD600A48214 /* _00SquareCalcTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E935ABF918FFBCD600A48214 /* _00SquareCalcTests.m */; };
 		E935AC0518FFBDD800A48214 /* MMKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = E935AC0418FFBDD800A48214 /* MMKeyboard.m */; };
+		E9CDF1371906309D0049E5B4 /* MMSquareCalc.m in Sources */ = {isa = PBXBuildFile; fileRef = E9CDF1361906309D0049E5B4 /* MMSquareCalc.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +59,8 @@
 		E935ABF918FFBCD600A48214 /* _00SquareCalcTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = _00SquareCalcTests.m; sourceTree = "<group>"; };
 		E935AC0318FFBDD800A48214 /* MMKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMKeyboard.h; sourceTree = "<group>"; };
 		E935AC0418FFBDD800A48214 /* MMKeyboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMKeyboard.m; sourceTree = "<group>"; };
+		E9CDF1351906309D0049E5B4 /* MMSquareCalc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMSquareCalc.h; path = ../MMSquareCalc.h; sourceTree = "<group>"; };
+		E9CDF1361906309D0049E5B4 /* MMSquareCalc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMSquareCalc.m; path = ../MMSquareCalc.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,6 +128,8 @@
 				E935ABE418FFBCD500A48214 /* TKBViewController.m */,
 				E935AC0318FFBDD800A48214 /* MMKeyboard.h */,
 				E935AC0418FFBDD800A48214 /* MMKeyboard.m */,
+				E9CDF1351906309D0049E5B4 /* MMSquareCalc.h */,
+				E9CDF1361906309D0049E5B4 /* MMSquareCalc.m */,
 				E935ABE618FFBCD500A48214 /* Images.xcassets */,
 				E935ABD218FFBCD500A48214 /* Supporting Files */,
 			);
@@ -262,6 +267,7 @@
 				E935ABDC18FFBCD500A48214 /* TKBAppDelegate.m in Sources */,
 				E935AC0518FFBDD800A48214 /* MMKeyboard.m in Sources */,
 				E935ABD818FFBCD500A48214 /* main.m in Sources */,
+				E9CDF1371906309D0049E5B4 /* MMSquareCalc.m in Sources */,
 				E935ABE518FFBCD500A48214 /* TKBViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
