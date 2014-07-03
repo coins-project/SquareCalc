@@ -12,5 +12,11 @@
 
 @interface TKBViewController : UIViewController<MMKeyboardDelegate, MMSquareCalcDelegate>
 
+typedef enum : NSInteger {
+    CURRENTARROW_square = 0,
+    CURRENTARROW_keyboard = 1,
+    
+} CurrentArrow;
 
 @end
+

@@ -16,6 +16,7 @@
     NSMutableArray *rowLabels;
     NSMutableArray *columnNumbers;
     NSMutableArray *rowNumbers;
+    NSMutableArray *rightNumbers;
 }
 
 - (id)initWithRow:(int)row Column:(int)column viewRect:(CGRect)viewRect operator:(NSString *)operator
@@ -178,14 +179,15 @@
     self.questionRowNumbers = rowNumbers;
     
     int arrayNumber = 0;
+    rightNumbers = [NSMutableArray array];
     for (int i = 0; i < 10; i++) {
         for (int j = 0; j < 10; j++) {
             NSInteger number = [self.questionColumnNumbers[j] integerValue] + [self.questionRowNumbers[i] integerValue];
-            self.rightAnswerNumbers[arrayNumber] = @(number);
+            rightNumbers[arrayNumber] = @(number);
             arrayNumber++;
         }
     }
-    
+    self.rightAnswerNumbers = rightNumbers;
 }
 
 

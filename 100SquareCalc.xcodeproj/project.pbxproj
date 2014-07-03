@@ -23,6 +23,7 @@
 		E935ABF818FFBCD600A48214 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E935ABF618FFBCD600A48214 /* InfoPlist.strings */; };
 		E935ABFA18FFBCD600A48214 /* _00SquareCalcTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E935ABF918FFBCD600A48214 /* _00SquareCalcTests.m */; };
 		E935AC0518FFBDD800A48214 /* MMKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = E935AC0418FFBDD800A48214 /* MMKeyboard.m */; };
+		E9A1368F1934E907004CCC50 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = E9A1368E1934E907004CCC50 /* icon.png */; };
 		E9CDF1371906309D0049E5B4 /* MMSquareCalc.m in Sources */ = {isa = PBXBuildFile; fileRef = E9CDF1361906309D0049E5B4 /* MMSquareCalc.m */; };
 /* End PBXBuildFile section */
 
@@ -59,6 +60,7 @@
 		E935ABF918FFBCD600A48214 /* _00SquareCalcTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = _00SquareCalcTests.m; sourceTree = "<group>"; };
 		E935AC0318FFBDD800A48214 /* MMKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMKeyboard.h; sourceTree = "<group>"; };
 		E935AC0418FFBDD800A48214 /* MMKeyboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMKeyboard.m; sourceTree = "<group>"; };
+		E9A1368E1934E907004CCC50 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		E9CDF1351906309D0049E5B4 /* MMSquareCalc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMSquareCalc.h; path = ../MMSquareCalc.h; sourceTree = "<group>"; };
 		E9CDF1361906309D0049E5B4 /* MMSquareCalc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMSquareCalc.m; path = ../MMSquareCalc.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -90,6 +92,7 @@
 		E935ABBF18FFBCD500A48214 = {
 			isa = PBXGroup;
 			children = (
+				E9A1368E1934E907004CCC50 /* icon.png */,
 				E935ABD118FFBCD500A48214 /* 100SquareCalc */,
 				E935ABF318FFBCD600A48214 /* 100SquareCalcTests */,
 				E935ABCA18FFBCD500A48214 /* Frameworks */,
@@ -213,6 +216,9 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "University of Tsukuba";
 				TargetAttributes = {
+					E935ABC718FFBCD500A48214 = {
+						DevelopmentTeam = RM3N4N4RRF;
+					};
 					E935ABEB18FFBCD600A48214 = {
 						TestTargetID = E935ABC718FFBCD500A48214;
 					};
@@ -243,6 +249,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E935ABE218FFBCD500A48214 /* Main_iPad.storyboard in Resources */,
+				E9A1368F1934E907004CCC50 /* icon.png in Resources */,
 				E935ABE718FFBCD500A48214 /* Images.xcassets in Resources */,
 				E935ABDF18FFBCD500A48214 /* Main_iPhone.storyboard in Resources */,
 				E935ABD618FFBCD500A48214 /* InfoPlist.strings in Resources */,
@@ -403,6 +410,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "100SquareCalc/100SquareCalc-Prefix.pch";
 				INFOPLIST_FILE = "100SquareCalc/100SquareCalc-Info.plist";
@@ -416,6 +424,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "100SquareCalc/100SquareCalc-Prefix.pch";
 				INFOPLIST_FILE = "100SquareCalc/100SquareCalc-Info.plist";
