@@ -12,6 +12,7 @@
 {
     NSMutableArray *squares;
     NSMutableArray *answerLabels;
+    NSMutableArray *akamaruLabels;
     NSMutableArray *columnLabels;
     NSMutableArray *rowLabels;
     NSMutableArray *columnNumbers;
@@ -42,6 +43,7 @@
 //Answer Squares
     squares = [NSMutableArray array];
     answerLabels = [NSMutableArray array];
+    akamaruLabels = [NSMutableArray array];
     //set
     for (int i = 1; i <= row; i++) {
         for (int j = 1; j <= column; j++) {
@@ -53,16 +55,27 @@
             _aSquareLabel.text = @"";
             _aSquareLabel.textAlignment = NSTextAlignmentCenter;
             _aSquareLabel.font = [UIFont systemFontOfSize:30];
+
+            
+            CGRect rect = CGRectMake(_aSquareLabel.frame.origin.x + _aSquareLabel.frame.size.width / 12, _aSquareLabel.frame.origin.y + _aSquareLabel.frame.size.width / 12, _aSquareLabel.frame.size.width - _aSquareLabel.frame.size.width / 6, _aSquareLabel.frame.size.height - _aSquareLabel.frame.size.width / 6);
+            UILabel *akamaruLabel = [[UILabel alloc] initWithFrame:rect];
+            akamaruLabel.layer.borderColor = [[UIColor redColor] CGColor];
+            akamaruLabel.layer.borderWidth = 3.5;
+            akamaruLabel.layer.cornerRadius = 21.5f;
+            akamaruLabel.hidden = YES;
+            
             
             [squares addObject:_aSquare];
             [answerLabels addObject:_aSquareLabel];
+            [akamaruLabels addObject:akamaruLabel];
             [self addSubview:_aSquare];
             [self addSubview:_aSquareLabel];
+            [self addSubview:akamaruLabel];
         }
     }
     self.userAnswerSquares = squares;
     self.userAnswerLabels = answerLabels;
-    
+    self.userAkamaruLabels = akamaruLabels;
     
 //QuestionSquareColumn
     columnLabels = [NSMutableArray array];

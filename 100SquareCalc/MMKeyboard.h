@@ -10,7 +10,7 @@
 
 @protocol MMKeyboardDelegate <NSObject>
 
-- (void)keyboradReact:(id)sender;
+- (void)keyboardReact:(id)sender;
 
 
 @end

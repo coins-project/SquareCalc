@@ -22,6 +22,7 @@
 
 @property(weak, nonatomic) NSMutableArray *userAnswerSquares;
 @property(weak, nonatomic) NSMutableArray *userAnswerLabels;
+@property(weak, nonatomic) NSMutableArray *userAkamaruLabels;
 @property(weak, nonatomic) NSMutableArray *rightAnswerNumbers;
 @property(nonatomic) UIButton *aSquare;
 @property(nonatomic) UILabel *aSquareLabel;

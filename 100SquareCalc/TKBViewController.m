@@ -16,14 +16,17 @@
     NSMutableArray *userAnswerNumbers;
     UILabel *currentSquareLabel;
     NSInteger currentSquareNumber;
-    NSInteger currentArrowNumber;
     UIButton *currentKeyboardButton;
     NSInteger currentKeyboardNumber;
     NSInteger numberOfRowColumn;
+    CurrentArrow currentArrowSelected;
+    State state;
     
     UIColor *normalButtonColor;
     UIColor *disabledButtonColor;
-    UIColor *selectedColor;
+    UIColor *squareSelectedColor;
+    UIColor *keyboardSelectedColor;
+    UIColor *defaultKeyboardColor;
     
     MMKeyboard *numberKeyboard;
     MMKeyboard *arrowKeyboard;
@@ -37,22 +40,25 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+	
+//各init
     userAnswerNumbers = [NSMutableArray array];
     NSInteger marginFromMainScreen = 20;
     numberOfRowColumn = 11;
     CGRect viewControllerRect = [[UIScreen mainScreen] applicationFrame];
 
+//color preference
     //normalButtonColor = [UIColor colorWithRed:0.043 green:0.169 blue:0.843 alpha:0.8];
     normalButtonColor = [UIColor blackColor];
     disabledButtonColor = [UIColor lightGrayColor];
-    selectedColor = [UIColor colorWithRed:0 green:0 blue:1.0 alpha:0.2];
+    squareSelectedColor = [UIColor colorWithRed:0 green:0 blue:1.0 alpha:0.2];
+    keyboardSelectedColor = [UIColor colorWithRed:0 green:1.0 blue:0 alpha:0.5];
+    defaultKeyboardColor = [UIColor colorWithHue:0.55 saturation:0.4 brightness:1.0 alpha:0.4];
     
     self.view.backgroundColor = [UIColor whiteColor];
     
 //Squares
     CGRect boardRect = CGRectMake(viewControllerRect.origin.x + marginFromMainScreen * 4, viewControllerRect.origin.y + marginFromMainScreen * 3, viewControllerRect.size.width - marginFromMainScreen * 10, viewControllerRect.size.width - marginFromMainScreen * 10);
-    
     squareBoard = [[MMSquareCalc alloc] initWithRow:10 Column:10 viewRect:boardRect operator:@"+"];
     squareBoard.delegate = self;
     squareBoard.backgroundColor = [UIColor colorWithHue:0.55 saturation:0.4 brightness:1.0 alpha:0.4];
@@ -62,70 +68,58 @@
     
     
 //Keyboard
-    //set key board
+  //set key board
     UIView *keyboard = [[UIView alloc]initWithFrame:CGRectMake(viewControllerRect.origin.x + marginFromMainScreen, viewControllerRect.size.height / 3 * 2, viewControllerRect.size.width - marginFromMainScreen * 2, viewControllerRect.size.height / 3)];
     [self.view addSubview:keyboard];
     
-    //set keyboard numbers
+  //set numberKeyboard
     NSMutableArray *items = [NSMutableArray arrayWithObjects:@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9",@"start",@"0",@"del",nil];
-    CGRect numberKeyboardRect = CGRectMake(0 + marginFromMainScreen, 0, keyboard.frame.size.width / 10 * 5.5, keyboard.frame.size.height);
+    CGRect numberKeyboardRect = CGRectMake(marginFromMainScreen, 0, keyboard.frame.size.width / 10 * 5.5, keyboard.frame.size.height);
     numberKeyboard = [[MMKeyboard alloc] initWithRow:4 Column:3 Items:items viewRect:numberKeyboardRect fontSize:41 normalColor:normalButtonColor disabledColor:disabledButtonColor];
     [keyboard addSubview:numberKeyboard];
     numberKeyboard.delegate = self;
+    
     for (int i = 0; i < 12; i++) {
         if (i != 9) {
             UIButton *button = numberKeyboard.KeyboardButtons[i];
             button.enabled = NO;
         }
     }
+
     
-    //set keyboard arrows
-    items = [NSMutableArray arrayWithObjects:@"",@"↑",@"次へ",@"←",@"決定",@"→",@"",@"↓",@"key",nil];
+  //set arrowKeyboard
+    items = [NSMutableArray arrayWithObjects:@"",@"↑",@"",@"←",@"決定",@"→",@"",@"↓",@"key",nil];
     CGRect arrowKeyboardRect = CGRectMake(keyboard.frame.size.width / 10 * 6, 0, keyboard.frame.size.width / 10 * 3.8, keyboard.frame.size.height);
-    arrowKeyboard = [[MMKeyboard alloc] initWithRow:3 Column:3 Items:items viewRect:arrowKeyboardRect fontSize:50 normalColor:normalButtonColor disabledColor:disabledButtonColor];
+    arrowKeyboard = [[MMKeyboard alloc] initWithRow:3 Column:3 Items:items viewRect:arrowKeyboardRect fontSize:41 normalColor:normalButtonColor disabledColor:disabledButtonColor];
     [keyboard addSubview:arrowKeyboard];
     arrowKeyboard.delegate = self;
-    [arrowKeyboard.KeyboardButtons[4] setTitle:@"" forState:UIControlStateNormal];
+    [arrowKeyboard.KeyboardButtons[ARROWKEYBOARD_enter] setTitle:@"push" forState:UIControlStateNormal];
     for (int i = 0; i < 8; i++) {
-        if (i % 2 == 0) {
-            UIButton *aButton = arrowKeyboard.KeyboardButtons[i];
-            aButton.layer.borderColor = [[UIColor clearColor] CGColor];
-        }
-    }
-    
-    UIButton *button = arrowKeyboard.KeyboardButtons[2];
-    button.layer.borderColor = [[UIColor clearColor] CGColor];
-    [button setTitle:@"" forState:UIControlStateNormal];
-    for (int i = 0; i < 9; i++) {
         UIButton *button = arrowKeyboard.KeyboardButtons[i];
         button.enabled = NO;
+        if (i % 2 == 0) {
+            button.layer.borderColor = [[UIColor clearColor] CGColor];
+            button.backgroundColor = [UIColor clearColor];
+        }
+
     }
     
-    
-    
-
-    
-
     
 //準備
     currentSquareLabel = [squareBoard.userAnswerLabels objectAtIndex:0];
     currentSquareNumber = 0;
-    
-    currentArrowNumber = CURRENTARROW_square;
-    
-    
-    
-    
-    
+    currentArrowSelected = CURRENTARROW_square;
+    state = STATE_ready;
+
 }
 
-- (void)keyboradReact:(id)sender
+- (void)keyboardReact:(id)sender
 {
     NSUInteger i = [numberKeyboard.KeyboardButtons indexOfObject:sender];
     NSUInteger j = [arrowKeyboard.KeyboardButtons indexOfObject:sender];
-    if (i < 100) {
+    if (i < [numberKeyboard.KeyboardButtons count]) {
         [self numberButtonPressed:sender];
-    } else if (j < 100) {
+    } else if (j < [arrowKeyboard.KeyboardButtons count]) {
         [self arrowButtonPressed:sender];
     }
 }
@@ -136,148 +130,133 @@
     NSMutableString *ms = [NSMutableString stringWithString:[NSString stringWithFormat:@"%@",currentSquareLabel.text]];
     NSUInteger i = [numberKeyboard.KeyboardButtons indexOfObject:sender];
     switch (i) {
-        case 0:
-            if (currentSquareLabel.text.length != 2 || [currentSquareLabel.text isEqualToString:@"0"]) {
-                [ms appendString:@"1"];
-                currentSquareLabel.text = ms;
-            }
+        case NUMBERKEYBOARD_1:
+            [ms appendString:@"1"];
+            currentSquareLabel.text = ms;
             break;
-        case 1:
-            if (currentSquareLabel.text.length != 2 || [currentSquareLabel.text isEqualToString:@"0"]) {
-                [ms appendString:@"2"];
-                currentSquareLabel.text = ms;
-            }
+        case NUMBERKEYBOARD_2:
+            [ms appendString:@"2"];
+            currentSquareLabel.text = ms;
             break;
-        case 2:
-            if (currentSquareLabel.text.length != 2 || [currentSquareLabel.text isEqualToString:@"0"]) {
-                [ms appendString:@"3"];
-                currentSquareLabel.text = ms;
-            }
+        case NUMBERKEYBOARD_3:
+            [ms appendString:@"3"];
+            currentSquareLabel.text = ms;
             break;
-        case 3:
-            if (currentSquareLabel.text.length != 2 || [currentSquareLabel.text isEqualToString:@"0"]) {
-                [ms appendString:@"4"];
-                currentSquareLabel.text = ms;
-            }
+        case NUMBERKEYBOARD_4:
+            [ms appendString:@"4"];
+            currentSquareLabel.text = ms;
             break;
-        case 4:
-            if (currentSquareLabel.text.length != 2 || [currentSquareLabel.text isEqualToString:@"0"]) {
-                [ms appendString:@"5"];
-                currentSquareLabel.text = ms;
-            }
+        case NUMBERKEYBOARD_5:
+            [ms appendString:@"5"];
+            currentSquareLabel.text = ms;
             break;
-        case 5:
-            if (currentSquareLabel.text.length != 2 || [currentSquareLabel.text isEqualToString:@"0"]) {
-                [ms appendString:@"6"];
-                currentSquareLabel.text = ms;
-            }
+        case NUMBERKEYBOARD_6:
+            [ms appendString:@"6"];
+            currentSquareLabel.text = ms;
             break;
-        case 6:
-            if (currentSquareLabel.text.length != 2 || [currentSquareLabel.text isEqualToString:@"0"]) {
-                [ms appendString:@"7"];
-                currentSquareLabel.text = ms;
-            }
+        case NUMBERKEYBOARD_7:
+            [ms appendString:@"7"];
+            currentSquareLabel.text = ms;
             break;
-        case 7:
-            if (currentSquareLabel.text.length != 2 || [currentSquareLabel.text isEqualToString:@"0"]) {
-                [ms appendString:@"8"];
-                currentSquareLabel.text = ms;
-            }
+        case NUMBERKEYBOARD_8:
+            [ms appendString:@"8"];
+            currentSquareLabel.text = ms;
             break;
-        case 8:
-            if (currentSquareLabel.text.length != 2 || [currentSquareLabel.text isEqualToString:@"0"]) {
-                [ms appendString:@"9"];
-                currentSquareLabel.text = ms;
-            }
+        case NUMBERKEYBOARD_9:
+            [ms appendString:@"9"];
+            currentSquareLabel.text = ms;
             break;
-        case 10:
-            if (currentSquareLabel.text.length != 2 || [currentSquareLabel.text isEqualToString:@"0"]) {
-                [ms appendString:@"0"];
-                currentSquareLabel.text = ms;
-            }
+        case NUMBERKEYBOARD_0:
+            [ms appendString:@"0"];
+            currentSquareLabel.text = ms;
             break;
             
-        case 105: //次
-            currentSquareLabel.backgroundColor = [UIColor clearColor];
-            currentSquareNumber++;
-            currentSquareLabel = squareBoard.userAnswerLabels[currentSquareNumber];
-            currentSquareLabel.backgroundColor = selectedColor;
-            break;
-            
-        case 9: //はじめ
+    
+        case NUMBERKEYBOARD_state:
         {
-            UIButton *button = numberKeyboard.KeyboardButtons[9];
-            if ([[button currentTitle] isEqualToString:@"start"]) {
-                if (currentArrowNumber == CURRENTARROW_square) {
-                    [button setTitle:@"finish" forState:UIControlStateNormal];
-                } else {
-                    [button setTitle:@"finish" forState:UIControlStateDisabled];
-                }
-                currentSquareLabel.backgroundColor = selectedColor;
-                for (int i = 0; i < 12; i++) {
-                    UIButton *button = numberKeyboard.KeyboardButtons[i];
-                    button.enabled = YES;
-                }
-                for (int i = 1; i < 9; i++) {
-                    if (i % 2 == 1 || i == 8) {
-                        UIButton *button = arrowKeyboard.KeyboardButtons[i];
+    
+//        ------------------------- STATE_ready ------------------------
+            if (state == STATE_ready) {
+                state = STATE_play;
+                [numberKeyboard.KeyboardButtons[NUMBERKEYBOARD_state] setTitle:@"finish" forState:UIControlStateNormal];
+                [numberKeyboard.KeyboardButtons[NUMBERKEYBOARD_state] setTitle:@"finish" forState:UIControlStateDisabled];
+                
+                currentSquareLabel.backgroundColor = squareSelectedColor;
+                if (currentArrowSelected == CURRENTARROW_square) {
+                    for (int i = 0; i < 12; i++) {
+                        UIButton *button = numberKeyboard.KeyboardButtons[i];
                         button.enabled = YES;
                     }
+                    for (int i = 0; i < 9; i++) {
+                        if (i % 2 == 1 || i == 8) {
+                            UIButton *button = arrowKeyboard.KeyboardButtons[i];
+                            button.enabled = YES;
+                        }
                     
-                }
-                
-            } else if ([[button currentTitle] isEqualToString:@"finish"]) {
-                if (currentArrowNumber == CURRENTARROW_square) {
-                    [button setTitle:@"answer" forState:UIControlStateNormal];
-                } else {
-                    [button setTitle:@"answer" forState:UIControlStateDisabled];
-                }
-                
-                for (int i = 0; i < 12; i++) {
-                    if (i != 9) {
-                        UIButton *button = numberKeyboard.KeyboardButtons[i];
-                        button.enabled = NO;
                     }
                 }
-                for (int i = 0; i < 9; i++) {
-                    if (i != 4) {
-                        UIButton *button = arrowKeyboard.KeyboardButtons[i];
-                        button.enabled = NO;
-                    }
-                }
+                
+//        ------------------------- STATE_play -------------------------
+            } else if (state == STATE_play) {
+                state = STATE_finish;
+                [numberKeyboard.KeyboardButtons[NUMBERKEYBOARD_state] setTitle:@"answer" forState:UIControlStateNormal];
+                [numberKeyboard.KeyboardButtons[NUMBERKEYBOARD_state] setTitle:@"answer" forState:UIControlStateDisabled];
+                
                 currentSquareLabel.backgroundColor = [UIColor clearColor];
+                if (currentArrowSelected == CURRENTARROW_square) {
+                    for (int i = 0; i < 12; i++) {
+                        if (i != 9) {
+                            UIButton *button = numberKeyboard.KeyboardButtons[i];
+                           button.enabled = NO;
+                        }
+                    }
+                
+                    for (int i = 0; i < 8; i++) {
+                        if (i != 4) {
+                            UIButton *button = arrowKeyboard.KeyboardButtons[i];
+                            button.enabled = NO;
+                        }
+                    }
+                } else {
+                    for (int i = 0; i < 12; i++) {
+                        if (i != 9) {
+                            UIButton *button = numberKeyboard.KeyboardButtons[i];
+                            [button setTitleColor:disabledButtonColor forState:UIControlStateDisabled];
+                        }
+                    }
+                }
+                
+                
                 for (int i = 0; i < 100; i++) {
                     UILabel *label = squareBoard.userAnswerLabels[i];
                     userAnswerNumbers[i] = label.text;
                 }
-                
-                
-            } else if ([[button currentTitle] isEqualToString:@"answer"]) {
-                if (currentArrowNumber == CURRENTARROW_square) {
-                    [button setTitle:@"next" forState:UIControlStateNormal];
-                } else {
-                    [button setTitle:@"next" forState:UIControlStateDisabled];
-                }
-                
+
+//        ------------------------- STATE_finish -------------------------
+            } else if (state == STATE_finish) {
+                state = STATE_answer;
+                [numberKeyboard.KeyboardButtons[NUMBERKEYBOARD_state] setTitle:@"next" forState:UIControlStateNormal];
+                [numberKeyboard.KeyboardButtons[NUMBERKEYBOARD_state] setTitle:@"next" forState:UIControlStateDisabled];
                 for (int i = 0; i < 100; i++) {
                     NSInteger userAnswer = [userAnswerNumbers[i] integerValue];
                     NSInteger rightAnswer = [squareBoard.rightAnswerNumbers[i] integerValue];
                     if (userAnswer == rightAnswer) {
-                        UILabel *label = squareBoard.userAnswerLabels[i];
-                        label.backgroundColor = [UIColor colorWithRed:0 green:1.0 blue:0 alpha:0.4];
+                        UILabel *akamaru = squareBoard.userAkamaruLabels[i];
+                        akamaru.hidden = NO;
                     }
                 }
-                
-            } else if ([[button currentTitle] isEqualToString:@"next"]) {
-                if (currentArrowNumber == CURRENTARROW_square) {
-                    [button setTitle:@"start" forState:UIControlStateNormal];
-                } else {
-                    [button setTitle:@"start" forState:UIControlStateDisabled];
-                }
+
+//        ------------------------- STATE_answer -------------------------
+            } else if (state == STATE_answer) {
+                state = STATE_ready;
+                [numberKeyboard.KeyboardButtons[NUMBERKEYBOARD_state] setTitle:@"start" forState:UIControlStateNormal];
+                [numberKeyboard.KeyboardButtons[NUMBERKEYBOARD_state] setTitle:@"start" forState:UIControlStateDisabled];
+
                 for (int i = 0; i < 100; i++) {
                     UILabel *label = squareBoard.userAnswerLabels[i];
-                    label.backgroundColor = [UIColor clearColor];
                     label.text = @"";
+                    UILabel *akamaru = squareBoard.userAkamaruLabels[i];
+                    akamaru.hidden = YES;
                     currentSquareNumber = 0;
                     currentSquareLabel = [squareBoard.userAnswerLabels objectAtIndex:0];
                 }
@@ -286,62 +265,9 @@
         }
             break;
             
-        case 11: //けす
-            if (currentSquareLabel.text.length  != 0) {
-                [ms deleteCharactersInRange:NSMakeRange([currentSquareLabel.text length] - 1, 1)];
-                currentSquareLabel.text = ms;
-            }
-            break;
-            
-        case 113: //マス
-            if (currentArrowNumber == CURRENTARROW_square) {  //キーにくる
-                numberKeyboard.backgroundColor = [UIColor colorWithRed:0 green:0.5 blue:0.5 alpha:0.07];
-                squareBoard.backgroundColor = [UIColor clearColor];
-                [arrowKeyboard.KeyboardButtons[4] setTitle:@"決定" forState:UIControlStateNormal];
-                currentArrowNumber = CURRENTARROW_keyboard;
-                UIButton *button = arrowKeyboard.KeyboardButtons[8]; //マス
-                [button setTitle:@"マス" forState:UIControlStateNormal];
-                button = arrowKeyboard.KeyboardButtons[4]; //決定
-                button.enabled = YES;
-                for (int i = 0; i < 14; i++) {
-                    UIButton *button =numberKeyboard.KeyboardButtons[i];
-                    button.enabled = NO;
-                    [button setTitleColor:normalButtonColor forState:UIControlStateDisabled];
-                }
-                button =numberKeyboard.KeyboardButtons[0];
-                currentKeyboardButton = button;
-                button.backgroundColor = [UIColor colorWithRed:0 green:1.0 blue:0 alpha:0.5];
-                currentKeyboardNumber = 0;
-                
-                button =numberKeyboard.KeyboardButtons[12];
-                [button setTitleColor:disabledButtonColor forState:UIControlStateDisabled];
-                
-                button = arrowKeyboard.KeyboardButtons[2];
-                button.layer.borderColor = [[UIColor blueColor] CGColor];
-                [button setTitle:@"次へ" forState:UIControlStateNormal];
-                
-            } else {    //マスにいく
-                squareBoard.backgroundColor = [UIColor colorWithRed:0 green:0.5 blue:0.5 alpha:0.07];
-                numberKeyboard.backgroundColor = [UIColor clearColor];
-                [arrowKeyboard.KeyboardButtons[4] setTitle:@"" forState:UIControlStateNormal];
-                currentArrowNumber = CURRENTARROW_keyboard;
-                UIButton *button = arrowKeyboard.KeyboardButtons[8];
-                [button setTitle:@"キー" forState:UIControlStateNormal];
-                button = arrowKeyboard.KeyboardButtons[4];
-                button.enabled = NO;
-                for (int i = 0; i < 14; i++) {
-                    UIButton *button =numberKeyboard.KeyboardButtons[i];
-                    button.enabled = YES;
-                    [button setTitleColor:disabledButtonColor forState:UIControlStateDisabled];
-                }
-                currentKeyboardButton.backgroundColor = [UIColor clearColor];
-            
-                button = arrowKeyboard.KeyboardButtons[2];
-                button.layer.borderColor = [[UIColor clearColor] CGColor];
-                [button setTitle:@"" forState:UIControlStateNormal];
-                
-            }
-            
+        case NUMBERKEYBOARD_delete: //けす
+            [ms deleteCharactersInRange:NSMakeRange([currentSquareLabel.text length] - 1, 1)];
+            currentSquareLabel.text = ms;
             break;
             
         default:
@@ -351,43 +277,42 @@
     
     
     
-    //これ以上入力できません
+//これ以上入力できないよ
     if ([currentSquareLabel.text length] == 2 || [currentSquareLabel.text isEqualToString:@"0"]) {
         for (int i = 0; i < 12; i++) {
             if (i != 9 && i != 11) {
-                UIButton *button =numberKeyboard.KeyboardButtons[i];
+                UIButton *button = numberKeyboard.KeyboardButtons[i];
                 button.enabled = NO;
             }
         }
-    } else if (currentArrowNumber == CURRENTARROW_square){
+//入力できる状態だよ
+    } else if (currentArrowSelected == CURRENTARROW_square){
         for (int i = 0; i < 12; i++) {
-            UIButton *button =numberKeyboard.KeyboardButtons[9];
-            if ([[button currentTitle] isEqualToString:@"finish"]) {
+            if (state == STATE_play) {
                 UIButton *button =numberKeyboard.KeyboardButtons[i];
                 button.enabled = YES;
             }
         }
     }
     
-    UIButton *button =numberKeyboard.KeyboardButtons[9];
-    if (![[button currentTitle] isEqualToString:@"finish"]) {
-        for (int i = 0; i < 12; i++) {
-            if (i != 9) {
-                UIButton *button =numberKeyboard.KeyboardButtons[i];
-                button.enabled = NO;
-            }
-        }
-    }
-    
-    //文字がない時はけすボタン消滅
-    //button = numberKeyboard.KeyboardButtons[9];
+//文字がないからdeleteButton isn't enabled
     if ([currentSquareLabel.text length] == 0) {
-        UIButton *button =numberKeyboard.KeyboardButtons[11];
+        UIButton *button =numberKeyboard.KeyboardButtons[NUMBERKEYBOARD_delete];
         button.enabled = NO;
-    } else if([[button currentTitle] isEqualToString:@"終了"] && currentArrowNumber == CURRENTARROW_square) {
-        UIButton *button =numberKeyboard.KeyboardButtons[11];
+//文字あるから
+    } else if(state == STATE_play && currentArrowSelected == CURRENTARROW_square) {
+        UIButton *button = numberKeyboard.KeyboardButtons[NUMBERKEYBOARD_delete];
         button.enabled = YES;
     }
+
+    NSUInteger k = [squareBoard.userAnswerLabels indexOfObject:currentSquareLabel];
+    NSString *rightAnswer = [NSString stringWithFormat:@"%@",squareBoard.rightAnswerNumbers[k]];
+
+    
+    if (([rightAnswer length] == 1 && [currentSquareLabel.text length] == 1) || ([rightAnswer length] == 2 && [currentSquareLabel.text length] == 2)) {
+        [self arrowButtonPressed:arrowKeyboard.KeyboardButtons[ARROWKEYBOARD_right]];
+    }
+    
 }
 
 
@@ -395,260 +320,229 @@
 - (void)arrowButtonPressed:(id)sender
 {
     NSUInteger i = [arrowKeyboard.KeyboardButtons indexOfObject:sender];
-    if (currentArrowNumber == CURRENTARROW_square) {
+    if (currentArrowSelected == CURRENTARROW_square) {
         switch (i) {
-            case 1:
+            case ARROWKEYBOARD_up:
                 currentSquareLabel.backgroundColor = [UIColor clearColor];
-                if (currentSquareNumber < 10) {
-                    currentSquareNumber += 90;
+                if (currentSquareNumber == 0) {
+                    currentSquareNumber = 99;
+                } else if (currentSquareNumber < 10) {
+                    currentSquareNumber += 89;
                 } else {
-                    currentSquareNumber = currentSquareNumber - 10;
+                    currentSquareNumber -= 10;
                 }
                 currentSquareLabel = squareBoard.userAnswerLabels[currentSquareNumber];
-                currentSquareLabel.backgroundColor = [UIColor colorWithRed:0 green:0 blue:1.0 alpha:0.2];
+                currentSquareLabel.backgroundColor = squareSelectedColor;
                 break;
                 
-            case 3:
+            case ARROWKEYBOARD_left:
                 currentSquareLabel.backgroundColor = [UIColor clearColor];
-                if (currentSquareNumber % 10 == 0) {
-                    currentSquareNumber += 9;
+                if (currentSquareNumber == 0) {
+                    currentSquareNumber = 99;
                 } else {
                     currentSquareNumber--;
                 }
                 currentSquareLabel = squareBoard.userAnswerLabels[currentSquareNumber];
-                currentSquareLabel.backgroundColor = [UIColor colorWithRed:0 green:0 blue:1.0 alpha:0.2];
+                currentSquareLabel.backgroundColor = squareSelectedColor;
                 break;
                 
-            case 5:
+            case ARROWKEYBOARD_right:
                 currentSquareLabel.backgroundColor = [UIColor clearColor];
-                if (currentSquareNumber % 10 == 9) {
-                    currentSquareNumber -= 9;
+                if (currentSquareNumber == 99) {
+                    currentSquareNumber = 0;
                 } else {
                     currentSquareNumber++;
                 }
                 currentSquareLabel = squareBoard.userAnswerLabels[currentSquareNumber];
-                currentSquareLabel.backgroundColor = [UIColor colorWithRed:0 green:0 blue:1.0 alpha:0.2];
+                currentSquareLabel.backgroundColor = squareSelectedColor;
                 break;
                 
-            case 7:
+            case ARROWKEYBOARD_down:
                 currentSquareLabel.backgroundColor = [UIColor clearColor];
-                if (currentSquareNumber >= 90) {
-                    currentSquareNumber -= 90;
+                if (currentSquareNumber == 99) {
+                    currentSquareNumber = 0;
+                } else if (currentSquareNumber >= 90) {
+                    currentSquareNumber -= 89;
                 } else {
                     currentSquareNumber =currentSquareNumber + 10;
                 }
                 currentSquareLabel = squareBoard.userAnswerLabels[currentSquareNumber];
-                currentSquareLabel.backgroundColor = [UIColor colorWithRed:0 green:0 blue:1.0 alpha:0.2];
+                currentSquareLabel.backgroundColor = squareSelectedColor;
                 break;
                 
-            case 8:
+            case ARROWKEYBOARD_key:
             {
+                currentArrowSelected = CURRENTARROW_keyboard;
+            //色変える
                 numberKeyboard.backgroundColor = [UIColor colorWithRed:0 green:0.5 blue:0.5 alpha:0.07];
                 squareBoard.backgroundColor = [UIColor clearColor];
-                [arrowKeyboard.KeyboardButtons[4] setTitle:@"決定" forState:UIControlStateNormal];
-                currentArrowNumber = CURRENTARROW_keyboard;
-                UIButton *button = arrowKeyboard.KeyboardButtons[8]; //マス
-                [button setTitle:@"マス" forState:UIControlStateNormal];
-                button = arrowKeyboard.KeyboardButtons[4]; //決定
+            //enter復活
+                UIButton *button = arrowKeyboard.KeyboardButtons[ARROWKEYBOARD_enter];
                 button.enabled = YES;
-                for (int i = 0; i < 14; i++) {
-                    UIButton *button =numberKeyboard.KeyboardButtons[i];
+            //squareKey
+                [arrowKeyboard.KeyboardButtons[ARROWKEYBOARD_key] setTitle:@"square" forState:UIControlStateNormal];
+                [arrowKeyboard.KeyboardButtons[ARROWKEYBOARD_key] setTitle:@"square" forState:UIControlStateDisabled];
+            //numberKeyboard is disabled.
+                for (int i = 0; i < 12; i++) {
+                    UIButton *button = numberKeyboard.KeyboardButtons[i];
                     button.enabled = NO;
                     [button setTitleColor:normalButtonColor forState:UIControlStateDisabled];
                 }
-                button =numberKeyboard.KeyboardButtons[0];
+                
+                if (state != STATE_play) {
+                    for (int i = 0; i < 12; i++) {
+                        if (i != 9) {
+                        UIButton *button = numberKeyboard.KeyboardButtons[i];
+                        [button setTitleColor:disabledButtonColor forState:UIControlStateDisabled];
+                        }
+                    }
+                }
+                
+                for (int i = 0; i < 9; i++) {
+                    if (i % 2 == 1 || i == 8) {
+                        UIButton *button = arrowKeyboard.KeyboardButtons[i];
+                        button.enabled = YES;
+                    }
+                }
+                
+                //currentKeyboard set
+                if (state == STATE_play) {
+                    button = numberKeyboard.KeyboardButtons[0];
+                    currentKeyboardNumber = 0;
+                } else {
+                    button = numberKeyboard.KeyboardButtons[9];
+                    currentKeyboardNumber = 9;
+                }
                 currentKeyboardButton = button;
                 button.backgroundColor = [UIColor colorWithRed:0 green:1.0 blue:0 alpha:0.5];
-                currentKeyboardNumber = 0;
                 
-                button =numberKeyboard.KeyboardButtons[12];
-                [button setTitleColor:disabledButtonColor forState:UIControlStateDisabled];
-                
-                button = arrowKeyboard.KeyboardButtons[2];
-                button.layer.borderColor = [[UIColor blueColor] CGColor];
-                [button setTitle:@"次へ" forState:UIControlStateNormal];
             }
                 
             default:
                 break;
         }
+        
     } else {
         switch (i) {
-            case 1:
+            case ARROWKEYBOARD_up:
             {
-                currentKeyboardButton.backgroundColor = [UIColor clearColor];
-                currentKeyboardNumber -= 7;
-                UIButton *button =numberKeyboard.KeyboardButtons[currentKeyboardNumber];
-                currentKeyboardButton = button;
-                currentKeyboardButton.backgroundColor = [UIColor colorWithRed:0 green:1.0 blue:0 alpha:0.5];
-            }
-                break;
-                
-            case 3:
-            {
-                currentKeyboardButton.backgroundColor = [UIColor clearColor];
-                currentKeyboardNumber--;
-                UIButton *button =numberKeyboard.KeyboardButtons[currentKeyboardNumber];
-                currentKeyboardButton = button;
-                currentKeyboardButton.backgroundColor = [UIColor colorWithRed:0 green:1.0 blue:0 alpha:0.5];
-            }
-                break;
-                
-            case 4:
-            {
-                    [self keyboradReact:currentKeyboardButton];
-            }
-                break;
-                
-            case 5:
-            {
-                currentKeyboardButton.backgroundColor = [UIColor clearColor];
-                currentKeyboardNumber++;
-                UIButton *button =numberKeyboard.KeyboardButtons[currentKeyboardNumber];
-                currentKeyboardButton = button;
-                currentKeyboardButton.backgroundColor = [UIColor colorWithRed:0 green:1.0 blue:0 alpha:0.5];
-            }
-                break;
-                
-            case 7:
-            {
-                currentKeyboardButton.backgroundColor = [UIColor clearColor];
-                currentKeyboardNumber += 7;
-                UIButton *button =numberKeyboard.KeyboardButtons[currentKeyboardNumber];
-                currentKeyboardButton = button;
-                currentKeyboardButton.backgroundColor = [UIColor colorWithRed:0 green:1.0 blue:0 alpha:0.5];
-            }
-                break;
-                
-            case 8:
-            {
-                squareBoard.backgroundColor = [UIColor colorWithRed:0 green:0.5 blue:0.5 alpha:0.07];
-                numberKeyboard.backgroundColor = [UIColor clearColor];
-                [arrowKeyboard.KeyboardButtons[4] setTitle:@"" forState:UIControlStateNormal];
-                currentArrowNumber = CURRENTARROW_square;
-                UIButton *button = arrowKeyboard.KeyboardButtons[8];
-                [button setTitle:@"キー" forState:UIControlStateNormal];
-                button = arrowKeyboard.KeyboardButtons[4];
-                button.enabled = NO;
-                for (int i = 0; i < 14; i++) {
-                    UIButton *button =numberKeyboard.KeyboardButtons[i];
-                    button.enabled = YES;
-                    [button setTitleColor:disabledButtonColor forState:UIControlStateDisabled];
+                currentKeyboardButton.backgroundColor = defaultKeyboardColor;
+                if (currentKeyboardNumber == 0) {
+                    currentKeyboardNumber = 11;
+                } else if(currentKeyboardNumber < 3) {
+                    currentKeyboardNumber += 8;
+                } else {
+                    currentKeyboardNumber -= 3;
                 }
-                currentKeyboardButton.backgroundColor = [UIColor clearColor];
-                
-                button = arrowKeyboard.KeyboardButtons[2];
-                button.layer.borderColor = [[UIColor clearColor] CGColor];
-                [button setTitle:@"" forState:UIControlStateNormal];
-                
+                UIButton *button = numberKeyboard.KeyboardButtons[currentKeyboardNumber];
+                currentKeyboardButton = button;
+                currentKeyboardButton.backgroundColor = keyboardSelectedColor;
             }
+                break;
+                
+            case ARROWKEYBOARD_left:
+            {
+                currentKeyboardButton.backgroundColor = defaultKeyboardColor;
+                if (currentKeyboardNumber == 0) {
+                    currentKeyboardNumber = 11;
+                } else {
+                    currentKeyboardNumber--;
+                }
+                UIButton *button =numberKeyboard.KeyboardButtons[currentKeyboardNumber];
+                currentKeyboardButton = button;
+                currentKeyboardButton.backgroundColor = keyboardSelectedColor;
+            }
+                break;
+                
+            case ARROWKEYBOARD_enter:
+            {
+                    [self keyboardReact:currentKeyboardButton];
+            }
+                break;
+                
+            case ARROWKEYBOARD_right:
+            {
+                currentKeyboardButton.backgroundColor = defaultKeyboardColor;
+                if (currentKeyboardNumber == 11) {
+                    currentKeyboardNumber = 0;
+                } else {
+                    currentKeyboardNumber++;
+                }
+                UIButton *button =numberKeyboard.KeyboardButtons[currentKeyboardNumber];
+                currentKeyboardButton = button;
+                currentKeyboardButton.backgroundColor = keyboardSelectedColor;
+            }
+                break;
+                
+            case ARROWKEYBOARD_down:
+            {
+                currentKeyboardButton.backgroundColor = defaultKeyboardColor;
+                if (currentKeyboardNumber == 11) {
+                    currentKeyboardNumber = 0;
+                } else if(currentKeyboardNumber >= 9) {
+                    currentKeyboardNumber -= 8;
+                } else {
+                    currentKeyboardNumber += 3;
+                }
+                UIButton *button =numberKeyboard.KeyboardButtons[currentKeyboardNumber];
+                currentKeyboardButton = button;
+                currentKeyboardButton.backgroundColor = keyboardSelectedColor;
+            }
+                break;
+                
+            case ARROWKEYBOARD_key:
+            {
+                currentArrowSelected = CURRENTARROW_square;
+                //色変える
+                squareBoard.backgroundColor = [UIColor colorWithRed:0 green:0.5 blue:0.5 alpha:0.07];
+                numberKeyboard.backgroundColor = defaultKeyboardColor;
+                // enter is disabled.
+                UIButton *button = arrowKeyboard.KeyboardButtons[ARROWKEYBOARD_enter];
+                button.enabled = NO;
+                // keyButton
+                [arrowKeyboard.KeyboardButtons[ARROWKEYBOARD_key] setTitle:@"key" forState:UIControlStateNormal];
+                [arrowKeyboard.KeyboardButtons[ARROWKEYBOARD_key] setTitle:@"key" forState:UIControlStateDisabled];
+                //numberKeyboard 復活
+                if (state == STATE_play) {
+                    for (int i = 0; i < 12; i++) {
+                        UIButton *button = numberKeyboard.KeyboardButtons[i];
+                        button.enabled = YES;
+                        [button setTitleColor:disabledButtonColor forState:UIControlStateDisabled];
+                    }
+                }
+                currentKeyboardButton.backgroundColor = defaultKeyboardColor;
+            }
+                if (state != STATE_play) {
+                    for (int i = 0; i < 9; i++) {
+                        if (i % 2 == 1) {
+                            UIButton *button = arrowKeyboard.KeyboardButtons[i];
+                            button.enabled = NO;
+                        }
+                    }
+                }
+
                 
             default:
                 break;
         }
         
-    }
-    
-    //端まで行ったら矢印使えなくする
-    //selected Squares
-    if (currentArrowNumber == CURRENTARROW_square)
-    {
-//        //← stop
-//        UIButton *button =numberKeyboard.KeyboardButtons[9];
-//        if (currentSquareNumber % 10 == 0) {
-//            UIButton *button = arrowKeyboard.KeyboardButtons[3];
-//            button.enabled = NO;
-//        } else if([[button currentTitle] isEqualToString:@"finish"]) {
-//            UIButton *button = arrowKeyboard.KeyboardButtons[3];
-//            button.enabled = YES;
-//        }
-//        
-//        //→ stop
-//        if (currentSquareNumber % 10 == 9) {
-//            UIButton *button = arrowKeyboard.KeyboardButtons[5];
-//            button.enabled = NO;
-//        } else if([[button currentTitle] isEqualToString:@"finish"]){
-//            UIButton *button = arrowKeyboard.KeyboardButtons[5];
-//            button.enabled = YES;
-//        }
-//        
-//        //↑ stop
-//        
-//        if (currentSquareNumber >= 0 && currentSquareNumber <= 9) {
-//            UIButton *button = arrowKeyboard.KeyboardButtons[1];
-//            button.enabled = NO;
-//        } else if([[button currentTitle] isEqualToString:@"finish"]){
-//            UIButton *button = arrowKeyboard.KeyboardButtons[1];
-//            button.enabled = YES;
-//        }
-//        
-//        //↓ stop
-//        if (currentSquareNumber >= 90 && currentSquareNumber <= 99) {
-//            UIButton *button = arrowKeyboard.KeyboardButtons[7];
-//            button.enabled = NO;
-//        } else if([[button currentTitle] isEqualToString:@"finish"]){
-//            UIButton *button = arrowKeyboard.KeyboardButtons[7];
-//            button.enabled = YES;
-//        }
-    } else {
-        
-        //selected Keyboard
-        //← stop
-        UIButton *button =numberKeyboard.KeyboardButtons[6];
-        if (currentKeyboardNumber % 7 == 0) {
-            UIButton *button = arrowKeyboard.KeyboardButtons[3];
-            button.enabled = NO;
-        } else if([[button currentTitle] isEqualToString:@"finish"]) {
-            UIButton *button = arrowKeyboard.KeyboardButtons[3];
-            button.enabled = YES;
-        }
-        
-        //→ stop
-        if (currentKeyboardNumber % 7 == 6) {
-            UIButton *button = arrowKeyboard.KeyboardButtons[5];
-            button.enabled = NO;
-        } else if([[button currentTitle] isEqualToString:@"finish"]){
-            UIButton *button = arrowKeyboard.KeyboardButtons[5];
-            button.enabled = YES;
-        }
-        
-        //↑ stop
-        if (currentKeyboardNumber >= 0 && currentKeyboardNumber <= 6) {
-            UIButton *button = arrowKeyboard.KeyboardButtons[1];
-            button.enabled = NO;
-        } else if([[button currentTitle] isEqualToString:@"finish"]){
-            UIButton *button = arrowKeyboard.KeyboardButtons[1];
-            button.enabled = YES;
-        }
-        
-        //↓ stop
-        if (currentKeyboardNumber >= 7 && currentKeyboardNumber <= 13) {
-            UIButton *button = arrowKeyboard.KeyboardButtons[7];
-            button.enabled = NO;
-        } else if([[button currentTitle] isEqualToString:@"finish"]){
-            UIButton *button = arrowKeyboard.KeyboardButtons[7];
-            button.enabled = YES;
-        }
     }
     
     
 //キーが点灯のとき用
     //文字列の長さ2まで
-    if (currentArrowNumber == CURRENTARROW_keyboard) {
+    if (currentArrowSelected == CURRENTARROW_keyboard) {
         if ([currentSquareLabel.text length] == 2|| [currentSquareLabel.text isEqualToString:@"0"]) {
             for (int i = 0; i < 12; i++) {
                 if (i != 9 && i != 11) {
-                    UIButton *button =numberKeyboard.KeyboardButtons[i];
+                    UIButton *button = numberKeyboard.KeyboardButtons[i];
                     [button setTitleColor:disabledButtonColor forState:UIControlStateDisabled];
                 }
             }
-        } else {
+        } else if(state == STATE_play){
             for (int i = 0; i < 12; i++) {
-                UIButton *button =numberKeyboard.KeyboardButtons[9];
-                if ([[button currentTitle] isEqualToString:@"finish"]) {
                     UIButton *button =numberKeyboard.KeyboardButtons[i];
                     [button setTitleColor:normalButtonColor forState:UIControlStateDisabled];
-                }
             }
         }
     
@@ -656,7 +550,7 @@
         if ([currentSquareLabel.text length] == 0) {
             UIButton *button =numberKeyboard.KeyboardButtons[11];
             [button setTitleColor:disabledButtonColor forState:UIControlStateDisabled];
-        } else if (currentArrowNumber == CURRENTARROW_keyboard){
+        } else {
             UIButton *button =numberKeyboard.KeyboardButtons[11];
             [button setTitleColor:normalButtonColor forState:UIControlStateDisabled];
         }
@@ -665,7 +559,7 @@
     
 //マスが点灯のとき用
     //これ以上入力できません
-    if (currentArrowNumber == CURRENTARROW_square) {
+    if (currentArrowSelected == CURRENTARROW_square) {
         if ([currentSquareLabel.text length] == 2 || [currentSquareLabel.text isEqualToString:@"0"]) {
             for (int i = 0; i < 12; i++) {
                 if (i != 9 && i != 11) {
@@ -673,37 +567,22 @@
                     button.enabled = NO;
                 }
             }
-        } else if (currentArrowNumber == CURRENTARROW_square){
+        } else if (state == STATE_play){
             for (int i = 0; i < 12; i++) {
-                UIButton *button =numberKeyboard.KeyboardButtons[9];
-                if ([[button currentTitle] isEqualToString:@"finish"]) {
-                    UIButton *button =numberKeyboard.KeyboardButtons[i];
-                    button.enabled = YES;
-                }
+                UIButton *button =numberKeyboard.KeyboardButtons[i];
+                button.enabled = YES;
             }
         }
     
-        UIButton *button =numberKeyboard.KeyboardButtons[9];
-        if (![[button currentTitle] isEqualToString:@"finish"]) {
-            for (int i = 0; i < 12; i++) {
-                if (i != 9) {
-                    UIButton *button =numberKeyboard.KeyboardButtons[i];
-                    button.enabled = NO;
-                }
-            }
-        }
     
         //文字がない時はけすボタン消滅
-        button = numberKeyboard.KeyboardButtons[9];
         if ([currentSquareLabel.text length] == 0) {
             UIButton *button =numberKeyboard.KeyboardButtons[11];
             button.enabled = NO;
-        } else if([[button currentTitle] isEqualToString:@"finish"] && currentArrowNumber == CURRENTARROW_square) {
+        } else if(state == STATE_play) {
             UIButton *button =numberKeyboard.KeyboardButtons[11];
             button.enabled = YES;
         }
-    
- 
     }
 }
 

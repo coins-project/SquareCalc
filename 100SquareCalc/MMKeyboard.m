@@ -56,7 +56,7 @@
 
 - (void)buttonPressed:(id)sender
 {
-    [_delegate keyboradReact:sender];
+    [_delegate keyboardReact:sender];
 }
 
 
