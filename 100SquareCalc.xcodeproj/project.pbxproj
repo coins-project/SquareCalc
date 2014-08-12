@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E91587F21999EAAD000DB78E /* selectButton.png in Resources */ = {isa = PBXBuildFile; fileRef = E91587F11999EAAD000DB78E /* selectButton.png */; };
 		E935ABCC18FFBCD500A48214 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E935ABCB18FFBCD500A48214 /* Foundation.framework */; };
 		E935ABCE18FFBCD500A48214 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E935ABCD18FFBCD500A48214 /* CoreGraphics.framework */; };
 		E935ABD018FFBCD500A48214 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E935ABCF18FFBCD500A48214 /* UIKit.framework */; };
@@ -23,8 +24,18 @@
 		E935ABF818FFBCD600A48214 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E935ABF618FFBCD600A48214 /* InfoPlist.strings */; };
 		E935ABFA18FFBCD600A48214 /* _00SquareCalcTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E935ABF918FFBCD600A48214 /* _00SquareCalcTests.m */; };
 		E935AC0518FFBDD800A48214 /* MMKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = E935AC0418FFBDD800A48214 /* MMKeyboard.m */; };
-		E95C601B19681AB500E67958 /* TKBSelectOperatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E95C601A19681AB500E67958 /* TKBSelectOperatorViewController.m */; };
+		E95C602419681EF400E67958 /* SelectOperatorVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E95C602319681EF400E67958 /* SelectOperatorVC.m */; };
 		E9A1368F1934E907004CCC50 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = E9A1368E1934E907004CCC50 /* icon.png */; };
+		E9AB34EE1977AC7A00B54105 /* welcomeBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AB34ED1977AC7A00B54105 /* welcomeBackground.png */; };
+		E9AB34F01977AD9A00B54105 /* husen.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AB34EF1977AD9A00B54105 /* husen.png */; };
+		E9AB34F21977F66600B54105 /* titleColor.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AB34F11977F66600B54105 /* titleColor.png */; };
+		E9AB34F41977FC4100B54105 /* backgroundLeft.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AB34F31977FC4100B54105 /* backgroundLeft.png */; };
+		E9AB34F6197802EF00B54105 /* buttonTextColor.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AB34F5197802EF00B54105 /* buttonTextColor.png */; };
+		E9AB34F819783EC700B54105 /* scoreLabel.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AB34F719783EC600B54105 /* scoreLabel.png */; };
+		E9AB34FA19783ECC00B54105 /* timeLabel.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AB34F919783ECC00B54105 /* timeLabel.png */; };
+		E9AB34FC1978A35900B54105 /* keyboardColor.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AB34FB1978A35900B54105 /* keyboardColor.png */; };
+		E9AB34FE1978A56100B54105 /* calcBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AB34FD1978A56100B54105 /* calcBackground.png */; };
+		E9AB35001978AD1500B54105 /* husen2.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AB34FF1978AD1500B54105 /* husen2.png */; };
 		E9CDF1371906309D0049E5B4 /* MMSquareCalc.m in Sources */ = {isa = PBXBuildFile; fileRef = E9CDF1361906309D0049E5B4 /* MMSquareCalc.m */; };
 /* End PBXBuildFile section */
 
@@ -39,6 +50,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E91587F11999EAAD000DB78E /* selectButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = selectButton.png; sourceTree = "<group>"; };
 		E935ABC818FFBCD500A48214 /* 100SquareCalc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = 100SquareCalc.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E935ABCB18FFBCD500A48214 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		E935ABCD18FFBCD500A48214 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -61,9 +73,19 @@
 		E935ABF918FFBCD600A48214 /* _00SquareCalcTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = _00SquareCalcTests.m; sourceTree = "<group>"; };
 		E935AC0318FFBDD800A48214 /* MMKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMKeyboard.h; sourceTree = "<group>"; };
 		E935AC0418FFBDD800A48214 /* MMKeyboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMKeyboard.m; sourceTree = "<group>"; };
-		E95C601919681AB500E67958 /* TKBSelectOperatorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKBSelectOperatorViewController.h; sourceTree = "<group>"; };
-		E95C601A19681AB500E67958 /* TKBSelectOperatorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKBSelectOperatorViewController.m; sourceTree = "<group>"; };
+		E95C602219681EF400E67958 /* SelectOperatorVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SelectOperatorVC.h; path = ../SelectOperatorVC.h; sourceTree = "<group>"; };
+		E95C602319681EF400E67958 /* SelectOperatorVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SelectOperatorVC.m; path = ../SelectOperatorVC.m; sourceTree = "<group>"; };
 		E9A1368E1934E907004CCC50 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
+		E9AB34ED1977AC7A00B54105 /* welcomeBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = welcomeBackground.png; sourceTree = "<group>"; };
+		E9AB34EF1977AD9A00B54105 /* husen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = husen.png; sourceTree = "<group>"; };
+		E9AB34F11977F66600B54105 /* titleColor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = titleColor.png; sourceTree = "<group>"; };
+		E9AB34F31977FC4100B54105 /* backgroundLeft.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backgroundLeft.png; sourceTree = "<group>"; };
+		E9AB34F5197802EF00B54105 /* buttonTextColor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buttonTextColor.png; sourceTree = "<group>"; };
+		E9AB34F719783EC600B54105 /* scoreLabel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = scoreLabel.png; sourceTree = "<group>"; };
+		E9AB34F919783ECC00B54105 /* timeLabel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = timeLabel.png; sourceTree = "<group>"; };
+		E9AB34FB1978A35900B54105 /* keyboardColor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = keyboardColor.png; sourceTree = "<group>"; };
+		E9AB34FD1978A56100B54105 /* calcBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = calcBackground.png; sourceTree = "<group>"; };
+		E9AB34FF1978AD1500B54105 /* husen2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = husen2.png; sourceTree = "<group>"; };
 		E9CDF1351906309D0049E5B4 /* MMSquareCalc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMSquareCalc.h; path = ../MMSquareCalc.h; sourceTree = "<group>"; };
 		E9CDF1361906309D0049E5B4 /* MMSquareCalc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMSquareCalc.m; path = ../MMSquareCalc.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -130,15 +152,26 @@
 				E935ABDB18FFBCD500A48214 /* TKBAppDelegate.m */,
 				E935ABDD18FFBCD500A48214 /* Main_iPhone.storyboard */,
 				E935ABE018FFBCD500A48214 /* Main_iPad.storyboard */,
+				E95C602219681EF400E67958 /* SelectOperatorVC.h */,
+				E95C602319681EF400E67958 /* SelectOperatorVC.m */,
+				E9AB34F919783ECC00B54105 /* timeLabel.png */,
+				E9AB34F719783EC600B54105 /* scoreLabel.png */,
+				E9AB34F5197802EF00B54105 /* buttonTextColor.png */,
+				E9AB34F31977FC4100B54105 /* backgroundLeft.png */,
+				E9AB34F11977F66600B54105 /* titleColor.png */,
+				E9AB34EF1977AD9A00B54105 /* husen.png */,
+				E9AB34ED1977AC7A00B54105 /* welcomeBackground.png */,
 				E935ABE318FFBCD500A48214 /* TKBViewController.h */,
 				E935ABE418FFBCD500A48214 /* TKBViewController.m */,
-				E95C601919681AB500E67958 /* TKBSelectOperatorViewController.h */,
-				E95C601A19681AB500E67958 /* TKBSelectOperatorViewController.m */,
+				E9AB34FF1978AD1500B54105 /* husen2.png */,
+				E9AB34FD1978A56100B54105 /* calcBackground.png */,
 				E935AC0318FFBDD800A48214 /* MMKeyboard.h */,
 				E935AC0418FFBDD800A48214 /* MMKeyboard.m */,
+				E9AB34FB1978A35900B54105 /* keyboardColor.png */,
 				E9CDF1351906309D0049E5B4 /* MMSquareCalc.h */,
 				E9CDF1361906309D0049E5B4 /* MMSquareCalc.m */,
 				E935ABE618FFBCD500A48214 /* Images.xcassets */,
+				E91587F11999EAAD000DB78E /* selectButton.png */,
 				E935ABD218FFBCD500A48214 /* Supporting Files */,
 			);
 			path = 100SquareCalc;
@@ -253,11 +286,22 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E9AB34FE1978A56100B54105 /* calcBackground.png in Resources */,
 				E935ABE218FFBCD500A48214 /* Main_iPad.storyboard in Resources */,
+				E9AB34F819783EC700B54105 /* scoreLabel.png in Resources */,
 				E9A1368F1934E907004CCC50 /* icon.png in Resources */,
+				E9AB34F21977F66600B54105 /* titleColor.png in Resources */,
+				E9AB35001978AD1500B54105 /* husen2.png in Resources */,
+				E9AB34F01977AD9A00B54105 /* husen.png in Resources */,
+				E9AB34FC1978A35900B54105 /* keyboardColor.png in Resources */,
+				E9AB34EE1977AC7A00B54105 /* welcomeBackground.png in Resources */,
 				E935ABE718FFBCD500A48214 /* Images.xcassets in Resources */,
 				E935ABDF18FFBCD500A48214 /* Main_iPhone.storyboard in Resources */,
+				E9AB34F41977FC4100B54105 /* backgroundLeft.png in Resources */,
+				E9AB34F6197802EF00B54105 /* buttonTextColor.png in Resources */,
 				E935ABD618FFBCD500A48214 /* InfoPlist.strings in Resources */,
+				E9AB34FA19783ECC00B54105 /* timeLabel.png in Resources */,
+				E91587F21999EAAD000DB78E /* selectButton.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -276,11 +320,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E95C602419681EF400E67958 /* SelectOperatorVC.m in Sources */,
 				E935ABDC18FFBCD500A48214 /* TKBAppDelegate.m in Sources */,
 				E935AC0518FFBDD800A48214 /* MMKeyboard.m in Sources */,
 				E935ABD818FFBCD500A48214 /* main.m in Sources */,
 				E9CDF1371906309D0049E5B4 /* MMSquareCalc.m in Sources */,
-				E95C601B19681AB500E67958 /* TKBSelectOperatorViewController.m in Sources */,
 				E935ABE518FFBCD500A48214 /* TKBViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -421,6 +465,7 @@
 				GCC_PREFIX_HEADER = "100SquareCalc/100SquareCalc-Prefix.pch";
 				INFOPLIST_FILE = "100SquareCalc/100SquareCalc-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -435,6 +480,7 @@
 				GCC_PREFIX_HEADER = "100SquareCalc/100SquareCalc-Prefix.pch";
 				INFOPLIST_FILE = "100SquareCalc/100SquareCalc-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

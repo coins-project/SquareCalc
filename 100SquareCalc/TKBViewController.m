@@ -19,6 +19,7 @@
     UIButton *currentKeyboardButton;
     NSInteger currentKeyboardNumber;
     NSInteger numberOfRowColumn;
+    NSMutableArray *modeSelectButtons;
     CurrentArrow currentArrowSelected;
     State state;
     
@@ -31,6 +32,17 @@
     MMKeyboard *numberKeyboard;
     MMKeyboard *arrowKeyboard;
     MMSquareCalc *squareBoard;
+    
+    UILabel *scoreLabel;
+    UILabel *timeLabel;
+    NSInteger score;
+    NSTimer *timer;
+    NSInteger timeCount;
+    NSInteger min;
+    NSInteger sec;
+    
+    BOOL backFlag;
+    
 }
 
 @end
@@ -40,15 +52,19 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    backFlag = NO;
+    score = 0;
 	
 //各init
     userAnswerNumbers = [NSMutableArray array];
-    NSInteger marginFromMainScreen = 20;
+    modeSelectButtons = [NSMutableArray array];
     numberOfRowColumn = 11;
     CGRect viewControllerRect = [[UIScreen mainScreen] applicationFrame];
+    NSInteger marginFromMainScreen = viewControllerRect.size.height / 50;
+    NSInteger deviceParameter = viewControllerRect.size.height / 50;
 
+    
 //color preference
-    //normalButtonColor = [UIColor colorWithRed:0.043 green:0.169 blue:0.843 alpha:0.8];
     normalButtonColor = [UIColor blackColor];
     disabledButtonColor = [UIColor lightGrayColor];
     squareSelectedColor = [UIColor colorWithRed:0 green:0 blue:1.0 alpha:0.2];
@@ -57,25 +73,50 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     
+    
 //Squares
-    CGRect boardRect = CGRectMake(viewControllerRect.origin.x + marginFromMainScreen * 4, viewControllerRect.origin.y + marginFromMainScreen * 3, viewControllerRect.size.width - marginFromMainScreen * 10, viewControllerRect.size.width - marginFromMainScreen * 10);
-    squareBoard = [[MMSquareCalc alloc] initWithRow:10 Column:10 viewRect:boardRect operator:@"+"];
+    CGRect boardRect = CGRectMake(viewControllerRect.origin.x + marginFromMainScreen * 2.5, viewControllerRect.origin.y + marginFromMainScreen * 8, viewControllerRect.size.width / 3 * 2, viewControllerRect.size.width / 3 * 2);
+    squareBoard = [[MMSquareCalc alloc] initWithRow:10 Column:10 viewRect:boardRect operator:_ope];
+    [squareBoard setQuestionNumber:_ope];
     squareBoard.delegate = self;
     squareBoard.backgroundColor = [UIColor colorWithHue:0.55 saturation:0.4 brightness:1.0 alpha:0.4];
-    [squareBoard setQuestionNumber];
     [self.view addSubview:squareBoard];
+    
+//modeSelectButton
+    NSMutableArray *buttonItems = [NSMutableArray arrayWithObjects:@"はじめ",@"矢印入力に",@"左利き用に",nil];
+    for (int i = 0; i < [buttonItems count]; i++) {
+        UIButton *aButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        if (i == 0) {
+            aButton.frame = CGRectMake(viewControllerRect.origin.x + marginFromMainScreen * 2.5 + viewControllerRect.size.width / 3 * 2 + 20,viewControllerRect.origin.y + marginFromMainScreen * 9, 170, 220);
+            aButton.titleLabel.font = [UIFont boldSystemFontOfSize:50];
+        } else {
+            aButton.frame = CGRectMake(viewControllerRect.origin.x + marginFromMainScreen * 2.5 + viewControllerRect.size.width / 3 * 2 + 20,viewControllerRect.origin.y + marginFromMainScreen * 23 + (i-1) * 110, 170, 90);
+            aButton.titleLabel.font = [UIFont boldSystemFontOfSize:40];
+        }
+        [aButton setTitle:buttonItems[i] forState:UIControlStateNormal];
+        [aButton addTarget:self action:@selector(modeSelectButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [aButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        aButton.titleLabel.adjustsFontSizeToFitWidth = YES;
+        UIImage *backImage = [UIImage imageNamed:@"selectButton.png"];
+        aButton.backgroundColor = [UIColor colorWithPatternImage:backImage];
+        aButton.layer.borderWidth = 2.5f;
+        aButton.layer.borderColor = [[UIColor grayColor] CGColor];
+        aButton.layer.cornerRadius = 30.0f;
+        [self.view addSubview:aButton];
+        [modeSelectButtons addObject:aButton];
+    }
 
     
     
 //Keyboard
   //set key board
-    UIView *keyboard = [[UIView alloc]initWithFrame:CGRectMake(viewControllerRect.origin.x + marginFromMainScreen, viewControllerRect.size.height / 3 * 2, viewControllerRect.size.width - marginFromMainScreen * 2, viewControllerRect.size.height / 3)];
+    UIView *keyboard = [[UIView alloc]initWithFrame:CGRectMake(viewControllerRect.origin.x + marginFromMainScreen, viewControllerRect.size.height / 30 * 21.5, viewControllerRect.size.width - marginFromMainScreen * 2, viewControllerRect.size.height / 30 * 9)];
     [self.view addSubview:keyboard];
     
   //set numberKeyboard
-    NSMutableArray *items = [NSMutableArray arrayWithObjects:@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9",@"start",@"0",@"del",nil];
+    NSMutableArray *numberItems = [NSMutableArray arrayWithObjects:@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9",@"start",@"0",@"del",nil];
     CGRect numberKeyboardRect = CGRectMake(marginFromMainScreen, 0, keyboard.frame.size.width / 10 * 5.5, keyboard.frame.size.height);
-    numberKeyboard = [[MMKeyboard alloc] initWithRow:4 Column:3 Items:items viewRect:numberKeyboardRect fontSize:41 normalColor:normalButtonColor disabledColor:disabledButtonColor];
+    numberKeyboard = [[MMKeyboard alloc] initWithRow:4 Column:3 Items:numberItems viewRect:numberKeyboardRect fontSize:deviceParameter * 2.5 normalColor:normalButtonColor disabledColor:disabledButtonColor];
     [keyboard addSubview:numberKeyboard];
     numberKeyboard.delegate = self;
     
@@ -88,9 +129,9 @@
 
     
   //set arrowKeyboard
-    items = [NSMutableArray arrayWithObjects:@"",@"↑",@"",@"←",@"決定",@"→",@"",@"↓",@"key",nil];
+    numberItems = [NSMutableArray arrayWithObjects:@"",@"↑",@"",@"←",@"決定",@"→",@"",@"↓",@"",nil];
     CGRect arrowKeyboardRect = CGRectMake(keyboard.frame.size.width / 10 * 6, 0, keyboard.frame.size.width / 10 * 3.8, keyboard.frame.size.height);
-    arrowKeyboard = [[MMKeyboard alloc] initWithRow:3 Column:3 Items:items viewRect:arrowKeyboardRect fontSize:41 normalColor:normalButtonColor disabledColor:disabledButtonColor];
+    arrowKeyboard = [[MMKeyboard alloc] initWithRow:3 Column:3 Items:numberItems viewRect:arrowKeyboardRect fontSize:deviceParameter * 2 normalColor:normalButtonColor disabledColor:disabledButtonColor];
     [keyboard addSubview:arrowKeyboard];
     arrowKeyboard.delegate = self;
     [arrowKeyboard.KeyboardButtons[ARROWKEYBOARD_enter] setTitle:@"push" forState:UIControlStateNormal];
@@ -103,13 +144,92 @@
         }
 
     }
+  
+// -------------------------------------------------------
+    UIButton *button = arrowKeyboard.KeyboardButtons[8];
+    button.enabled = NO;
+//   -------------------------------------------------------
     
     
+    
+//点数・時間
+    scoreLabel = [[UILabel alloc] initWithFrame:CGRectMake(viewControllerRect.origin.x + marginFromMainScreen * 2, viewControllerRect.origin.y + marginFromMainScreen * 3, viewControllerRect.size.width / 2.0, 90)];
+    timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(viewControllerRect.size.width - marginFromMainScreen - viewControllerRect.size.width / 2.75, viewControllerRect.origin.y + marginFromMainScreen * 3, viewControllerRect.size.width / 3, 90)];
+    scoreLabel.text = @"  目指せ100点!!";
+    timeLabel.text = @"0 : 00";
+    UIGraphicsBeginImageContext(scoreLabel.frame.size);
+    [[UIImage imageNamed:@"scoreLabel.png"] drawInRect:scoreLabel.bounds];
+    UIImage *scoreHusen = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    scoreLabel.backgroundColor = [UIColor colorWithPatternImage:scoreHusen];
+    UIGraphicsBeginImageContext(timeLabel.frame.size);
+    [[UIImage imageNamed:@"timeLabel.png"] drawInRect:timeLabel.bounds];
+    UIImage *timeHusen = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    timeLabel.backgroundColor = [UIColor colorWithPatternImage:timeHusen];
+    scoreLabel.font = [UIFont boldSystemFontOfSize:50];
+    timeLabel.font = [UIFont boldSystemFontOfSize:60];
+    scoreLabel.textAlignment = NSTextAlignmentLeft;
+    timeLabel.textAlignment = NSTextAlignmentCenter;
+    scoreLabel.adjustsFontSizeToFitWidth = YES;
+    [self.view addSubview:scoreLabel];
+    [self.view addSubview:timeLabel];
+    min = 0;
+    sec = 0;
+    
+//背景
+    UIImage *backgroundImgae = [UIImage imageNamed:@"calcBackground.png"];
+    self.view.backgroundColor = [UIColor colorWithPatternImage:backgroundImgae];
+
+//はじめるボタン
+    UIButton *startButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    startButton.frame = CGRectMake(viewControllerRect.origin.x + viewControllerRect.size.width / 3, viewControllerRect.origin.y + viewControllerRect.size.height / 3, viewControllerRect.size.width / 3, viewControllerRect.size.height / 5);
+    [startButton setTitle:@"はじめる" forState:UIControlStateNormal];
+    [startButton addTarget:self action:@selector(numberButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    startButton.titleLabel.font = [UIFont boldSystemFontOfSize:50];
+    startButton.titleLabel.adjustsFontSizeToFitWidth = YES;
+    //[self.view addSubview:startButton];
+    [self.view bringSubviewToFront:startButton];
+    startButton.backgroundColor = [UIColor blackColor];
+    
+
 //準備
     currentSquareLabel = [squareBoard.userAnswerLabels objectAtIndex:0];
     currentSquareNumber = 0;
     currentArrowSelected = CURRENTARROW_square;
     state = STATE_ready;
+
+}
+
+- (void)time:(NSTimer *)timer
+{
+    timeCount++;
+    if (timeCount % 60 == 0 && timeCount != 0) min++;
+    sec = timeCount % 60;
+    
+    if (sec < 10) timeLabel.text = [NSString stringWithFormat:@"%d : 0%d",min,sec];
+    else timeLabel.text = [NSString stringWithFormat:@"%d : %d",min,sec];
+}
+
+- (void)modeSelectButtonPressed:(id)sender
+{
+    NSUInteger i = [modeSelectButtons indexOfObject:sender];
+    switch (i) {
+        case 0:
+            NSLog(@"0");
+            break;
+            
+        case 1:
+            NSLog(@"1");
+            break;
+            
+        case 2:
+            NSLog(@"2");
+            break;
+            
+        default:
+            break;
+    }
 
 }
 
@@ -129,6 +249,12 @@
 {
     NSMutableString *ms = [NSMutableString stringWithString:[NSString stringWithFormat:@"%@",currentSquareLabel.text]];
     NSUInteger i = [numberKeyboard.KeyboardButtons indexOfObject:sender];
+    if (i < 9 || i == 10) {
+        if (backFlag == YES) {
+            ms = [NSMutableString string];
+            backFlag = NO;
+        }
+    }
     switch (i) {
         case NUMBERKEYBOARD_1:
             [ms appendString:@"1"];
@@ -180,6 +306,9 @@
                 state = STATE_play;
                 [numberKeyboard.KeyboardButtons[NUMBERKEYBOARD_state] setTitle:@"finish" forState:UIControlStateNormal];
                 [numberKeyboard.KeyboardButtons[NUMBERKEYBOARD_state] setTitle:@"finish" forState:UIControlStateDisabled];
+                timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(time:) userInfo:nil repeats:YES];
+                timeCount = 0;
+                
                 
                 currentSquareLabel.backgroundColor = squareSelectedColor;
                 if (currentArrowSelected == CURRENTARROW_square) {
@@ -201,6 +330,7 @@
                 state = STATE_finish;
                 [numberKeyboard.KeyboardButtons[NUMBERKEYBOARD_state] setTitle:@"answer" forState:UIControlStateNormal];
                 [numberKeyboard.KeyboardButtons[NUMBERKEYBOARD_state] setTitle:@"answer" forState:UIControlStateDisabled];
+                 [timer invalidate];
                 
                 currentSquareLabel.backgroundColor = [UIColor clearColor];
                 if (currentArrowSelected == CURRENTARROW_square) {
@@ -225,13 +355,17 @@
                         }
                     }
                 }
-                
-                
+            
                 for (int i = 0; i < 100; i++) {
                     UILabel *label = squareBoard.userAnswerLabels[i];
-                    userAnswerNumbers[i] = label.text;
+                    if ([label.text isEqualToString:@""]) {
+                        userAnswerNumbers[i] = @(100);
+                    } else {
+                        userAnswerNumbers[i] = label.text;
+                    }
                 }
-
+                
+                
 //        ------------------------- STATE_finish -------------------------
             } else if (state == STATE_finish) {
                 state = STATE_answer;
@@ -243,12 +377,24 @@
                     if (userAnswer == rightAnswer) {
                         UILabel *akamaru = squareBoard.userAkamaruLabels[i];
                         akamaru.hidden = NO;
+                        score++;
                     }
                 }
+                if (score < 10) scoreLabel.text = [NSString stringWithFormat:@" 得点 :   %d点",score];
+                else if(score < 100) scoreLabel.text = [NSString stringWithFormat:@" 得点 :  %d点",score];
+                else scoreLabel.text = [NSString stringWithFormat:@" 得点 : %d点",score];
+
+
 
 //        ------------------------- STATE_answer -------------------------
             } else if (state == STATE_answer) {
                 state = STATE_ready;
+                score = 0;
+                scoreLabel.text = @" 得点 :";
+                timeLabel.text = @"0 : 00";
+                min = 0;
+                sec = 0;
+                timeCount = 0;
                 [numberKeyboard.KeyboardButtons[NUMBERKEYBOARD_state] setTitle:@"start" forState:UIControlStateNormal];
                 [numberKeyboard.KeyboardButtons[NUMBERKEYBOARD_state] setTitle:@"start" forState:UIControlStateDisabled];
 
@@ -260,7 +406,7 @@
                     currentSquareNumber = 0;
                     currentSquareLabel = [squareBoard.userAnswerLabels objectAtIndex:0];
                 }
-                [squareBoard setQuestionNumber];
+                [squareBoard setQuestionNumber:_ope];
             }
         }
             break;
@@ -285,6 +431,7 @@
                 button.enabled = NO;
             }
         }
+
 //入力できる状態だよ
     } else if (currentArrowSelected == CURRENTARROW_square){
         for (int i = 0; i < 12; i++) {
@@ -309,9 +456,16 @@
     NSString *rightAnswer = [NSString stringWithFormat:@"%@",squareBoard.rightAnswerNumbers[k]];
 
     
-    if (([rightAnswer length] == 1 && [currentSquareLabel.text length] == 1) || ([rightAnswer length] == 2 && [currentSquareLabel.text length] == 2)) {
-        [self arrowButtonPressed:arrowKeyboard.KeyboardButtons[ARROWKEYBOARD_right]];
+    if ((([rightAnswer length] == 1 && [currentSquareLabel.text length] == 1) || ([rightAnswer length] == 2 && [currentSquareLabel.text length] == 2) || [currentSquareLabel.text isEqualToString:@"0"])) {
+        if (currentSquareNumber == 99) {
+            //[self numberButtonPressed:numberKeyboard.KeyboardButtons[NUMBERKEYBOARD_state]];
+            
+        } else {
+            [self arrowButtonPressed:arrowKeyboard.KeyboardButtons[ARROWKEYBOARD_right]];
+            backFlag = NO;
+        }
     }
+    
     
 }
 
@@ -323,6 +477,7 @@
     if (currentArrowSelected == CURRENTARROW_square) {
         switch (i) {
             case ARROWKEYBOARD_up:
+                backFlag = YES;
                 currentSquareLabel.backgroundColor = [UIColor clearColor];
                 if (currentSquareNumber == 0) {
                     currentSquareNumber = 99;
@@ -336,6 +491,7 @@
                 break;
                 
             case ARROWKEYBOARD_left:
+                backFlag = YES;
                 currentSquareLabel.backgroundColor = [UIColor clearColor];
                 if (currentSquareNumber == 0) {
                     currentSquareNumber = 99;
@@ -347,6 +503,7 @@
                 break;
                 
             case ARROWKEYBOARD_right:
+                backFlag = YES;
                 currentSquareLabel.backgroundColor = [UIColor clearColor];
                 if (currentSquareNumber == 99) {
                     currentSquareNumber = 0;
@@ -358,6 +515,7 @@
                 break;
                 
             case ARROWKEYBOARD_down:
+                backFlag = YES;
                 currentSquareLabel.backgroundColor = [UIColor clearColor];
                 if (currentSquareNumber == 99) {
                     currentSquareNumber = 0;

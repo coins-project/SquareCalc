@@ -51,5 +51,7 @@ typedef enum : NSInteger {
     STATE_answer,
 } State;
 
+@property int ope;
+
 @end
 

@@ -7,8 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SelectOperatorVC.h"
 
 @interface TKBAppDelegate : UIResponder <UIApplicationDelegate>
+{
+    UINavigationController * navi_;
+}
+
 
 @property (strong, nonatomic) UIWindow *window;
 

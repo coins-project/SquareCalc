@@ -15,8 +15,8 @@
 
 @interface MMSquareCalc : UIView
 
-- (id)initWithRow:(int)row Column:(int)column viewRect:(CGRect)viewRect operator:(NSString *)operator;
-- (void)setQuestionNumber;
+- (id)initWithRow:(int)row Column:(int)column viewRect:(CGRect)viewRect operator:(int)ope;
+- (void)setQuestionNumber:(int)ope;
 
 @property(nonatomic, assign) id<MMSquareCalcDelegate> delegate;
 
@@ -24,6 +24,7 @@
 @property(weak, nonatomic) NSMutableArray *userAnswerLabels;
 @property(weak, nonatomic) NSMutableArray *userAkamaruLabels;
 @property(weak, nonatomic) NSMutableArray *rightAnswerNumbers;
+
 @property(nonatomic) UIButton *aSquare;
 @property(nonatomic) UILabel *aSquareLabel;
 @property(weak, nonatomic) NSMutableArray *questionRowNumbers;

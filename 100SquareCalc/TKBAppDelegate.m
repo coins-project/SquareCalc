@@ -8,11 +8,15 @@
 
 #import "TKBAppDelegate.h"
 
+
 @implementation TKBAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    SelectOperatorVC *selectOperatorVC = [[SelectOperatorVC alloc] init];
+    navi_ = [[UINavigationController alloc]initWithRootViewController:selectOperatorVC];
+    self.window.rootViewController = navi_;
     return YES;
 }
 							

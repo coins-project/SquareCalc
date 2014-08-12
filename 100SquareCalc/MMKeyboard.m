@@ -15,7 +15,7 @@
 
 -(id)initWithRow:(int)row Column:(int)column Items:(NSMutableArray *)items viewRect:(CGRect)viewRect fontSize:(CGFloat)fontSize normalColor:(UIColor *)normalColor disabledColor:(UIColor *)disabledColor
 {
-    CGFloat margin = 3.0;
+    CGFloat margin = viewRect.size.height / 100;
     // remove all buttons from view and array
 	if (buttons) {
 		for (_aButton in buttons) {
@@ -42,10 +42,13 @@
         if ([items[i] isEqualToString:@""]) {
             aButton.enabled = NO;
         }
-        aButton.backgroundColor = [UIColor colorWithHue:0.55 saturation:0.4 brightness:1.0 alpha:0.4];
-        aButton.layer.borderWidth = 2.0f;
-        aButton.layer.borderColor = [[UIColor colorWithHue:0.6 saturation:0.7 brightness:1.0 alpha:1.0] CGColor];
-        aButton.layer.cornerRadius = 15.0f;
+        //aButton.backgroundColor = [UIColor colorWithHue:0.55 saturation:0.4 brightness:1.0 alpha:0.4];
+        UIImage *backgroundImgae = [UIImage imageNamed:@"keyboardColor.png"];
+        aButton.backgroundColor = [UIColor colorWithPatternImage:backgroundImgae];
+        aButton.backgroundColor = [UIColor whiteColor];
+        aButton.layer.borderWidth = margin;
+        aButton.layer.borderColor = [[UIColor grayColor] CGColor];
+        aButton.layer.cornerRadius = margin * 5;
         [buttons addObject:aButton];
         [self addSubview:aButton];
     }

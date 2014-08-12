@@ -18,24 +18,25 @@
     NSMutableArray *columnNumbers;
     NSMutableArray *rowNumbers;
     NSMutableArray *rightNumbers;
+    
 }
 
-- (id)initWithRow:(int)row Column:(int)column viewRect:(CGRect)viewRect operator:(NSString *)operator
+- (id)initWithRow:(int)row Column:(int)column viewRect:(CGRect)viewRect operator:(int)ope
 {
-    int ope = 0;
-    if ([operator isEqualToString:@"+"]) {
-        ope = 0;
-    } else if ([operator isEqualToString:@"-"]) {
-        ope = 1;
-    } else if ([operator isEqualToString:@"×"]) {
-        ope = 2;
-    } else if ([operator isEqualToString:@"÷"]) {
-        ope = 3;
-    }
+
+//    if ([operator isEqualToString:@"+"]) {
+//        ope = 0;
+//    } else if ([operator isEqualToString:@"-"]) {
+//        ope = 1;
+//    } else if ([operator isEqualToString:@"×"]) {
+//        ope = 2;
+//    } else if ([operator isEqualToString:@"÷"]) {
+//        ope = 3;
+//    }
 
     self = [super init];
     self.frame = viewRect;
-    self.layer.borderWidth = 2.0f;
+    self.layer.borderWidth = 3.0f;
     self.layer.borderColor = [[UIColor blackColor] CGColor];
     
     CGFloat squareAreaLength = self.frame.size.width / (column + 1);
@@ -50,18 +51,19 @@
             _aSquare = [[UIButton alloc] initWithFrame:CGRectMake(squareAreaLength * j, squareAreaLength * i, squareAreaLength, squareAreaLength)];
             _aSquare.layer.borderWidth = 1.0f;
             _aSquare.layer.borderColor = [[UIColor blackColor] CGColor];
+            _aSquare.backgroundColor = [UIColor whiteColor];
             
             _aSquareLabel = [[UILabel alloc] initWithFrame:_aSquare.frame];
             _aSquareLabel.text = @"";
             _aSquareLabel.textAlignment = NSTextAlignmentCenter;
-            _aSquareLabel.font = [UIFont systemFontOfSize:30];
+            _aSquareLabel.font = [UIFont systemFontOfSize:35];
 
             
             CGRect rect = CGRectMake(_aSquareLabel.frame.origin.x + _aSquareLabel.frame.size.width / 12, _aSquareLabel.frame.origin.y + _aSquareLabel.frame.size.width / 12, _aSquareLabel.frame.size.width - _aSquareLabel.frame.size.width / 6, _aSquareLabel.frame.size.height - _aSquareLabel.frame.size.width / 6);
             UILabel *akamaruLabel = [[UILabel alloc] initWithFrame:rect];
             akamaruLabel.layer.borderColor = [[UIColor redColor] CGColor];
-            akamaruLabel.layer.borderWidth = 3.5;
-            akamaruLabel.layer.cornerRadius = 21.5f;
+            akamaruLabel.layer.borderWidth = 2.5;
+            akamaruLabel.layer.cornerRadius = 19.0f;
             akamaruLabel.hidden = YES;
             
             
@@ -85,7 +87,9 @@
         _aSquareLabel.layer.borderWidth = 1.0f;
         _aSquareLabel.layer.borderColor = [[UIColor blackColor] CGColor];
         _aSquareLabel.textAlignment = NSTextAlignmentCenter;
-        _aSquareLabel.font = [UIFont systemFontOfSize:30];
+        _aSquareLabel.font = [UIFont systemFontOfSize:35];
+        _aSquareLabel.backgroundColor = [UIColor whiteColor];
+        
         
         if (i == 0) {
             switch (ope) {
@@ -120,7 +124,9 @@
         _aSquareLabel.layer.borderWidth = 1.0f;
         _aSquareLabel.layer.borderColor = [[UIColor blackColor] CGColor];
         _aSquareLabel.textAlignment = NSTextAlignmentCenter;
-        _aSquareLabel.font = [UIFont systemFontOfSize:30];
+        _aSquareLabel.font = [UIFont systemFontOfSize:35];
+        _aSquareLabel.backgroundColor = [UIColor whiteColor];
+        
         
         [rowLabels addObject:_aSquareLabel];
         [self addSubview:_aSquareLabel];
@@ -131,12 +137,15 @@
 }
 
 
-- (void)setQuestionNumber
+- (void)setQuestionNumber:(int)ope
 {
     NSUInteger columnCount = [self.questionColumnLabels count];
     NSUInteger rowCount = [self.questionRowLabels count];
     NSInteger questionRandomNumber = 0;
    
+    int para = 0;
+    if (ope == 1) para = 1;
+
     
 //column
     columnNumbers = [NSMutableArray array];
@@ -144,7 +153,7 @@
     for (int i = 0; i < columnCount; i++) {
         while (true) {
             int m = 0;
-            questionRandomNumber = arc4random() % 10 + 1;
+            questionRandomNumber = arc4random() % 10 + 10 * para;
             for (int j = 0; j < i; j++) {
                 NSNumber *number = columnNumbers[j];
                 NSInteger n = [number integerValue];
@@ -172,7 +181,7 @@
     for (int i = 0; i < rowCount; i++) {
         while (true) {
             int m = 0;
-            questionRandomNumber = arc4random() % 10 + 1;
+            questionRandomNumber = arc4random() % 10;
             for (int j = 0; j < i; j++) {
                 NSNumber *number = rowNumbers[j];
                 NSInteger n = [number integerValue];
@@ -193,14 +202,34 @@
     
     int arrayNumber = 0;
     rightNumbers = [NSMutableArray array];
+    
     for (int i = 0; i < 10; i++) {
         for (int j = 0; j < 10; j++) {
-            NSInteger number = [self.questionColumnNumbers[j] integerValue] + [self.questionRowNumbers[i] integerValue];
+            NSInteger number;
+            switch (ope) {
+                case 0:
+                     number = [self.questionColumnNumbers[j] integerValue] + [self.questionRowNumbers[i] integerValue];
+                    break;
+                    
+                case 1:
+                    number = [self.questionColumnNumbers[j] integerValue] - [self.questionRowNumbers[i] integerValue];
+                    break;
+                
+                case 2:
+                    number = [self.questionColumnNumbers[j] integerValue] * [self.questionRowNumbers[i] integerValue];
+                    break;
+                    
+                default:
+                    break;
+            
+            }
             rightNumbers[arrayNumber] = @(number);
             arrayNumber++;
         }
     }
+
     self.rightAnswerNumbers = rightNumbers;
+    
 }
 
 
