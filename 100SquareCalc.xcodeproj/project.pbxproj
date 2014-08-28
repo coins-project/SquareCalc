@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		E91587F21999EAAD000DB78E /* selectButton.png in Resources */ = {isa = PBXBuildFile; fileRef = E91587F11999EAAD000DB78E /* selectButton.png */; };
+		E91587F41999F493000DB78E /* flower.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E91587F31999F493000DB78E /* flower.jpg */; };
+		E91587F61999F83F000DB78E /* hanamaru.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = E91587F51999F83F000DB78E /* hanamaru.jpeg */; };
+		E91587FD1999FBC4000DB78E /* heart2.png in Resources */ = {isa = PBXBuildFile; fileRef = E91587FA1999FBC4000DB78E /* heart2.png */; };
+		E91587FE1999FBC4000DB78E /* heart3.png in Resources */ = {isa = PBXBuildFile; fileRef = E91587FB1999FBC4000DB78E /* heart3.png */; };
+		E91587FF1999FBC4000DB78E /* heart4.png in Resources */ = {isa = PBXBuildFile; fileRef = E91587FC1999FBC4000DB78E /* heart4.png */; };
+		E91588011999FC3E000DB78E /* heart1.png in Resources */ = {isa = PBXBuildFile; fileRef = E91588001999FC3E000DB78E /* heart1.png */; };
 		E935ABCC18FFBCD500A48214 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E935ABCB18FFBCD500A48214 /* Foundation.framework */; };
 		E935ABCE18FFBCD500A48214 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E935ABCD18FFBCD500A48214 /* CoreGraphics.framework */; };
 		E935ABD018FFBCD500A48214 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E935ABCF18FFBCD500A48214 /* UIKit.framework */; };
@@ -51,6 +57,12 @@
 
 /* Begin PBXFileReference section */
 		E91587F11999EAAD000DB78E /* selectButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = selectButton.png; sourceTree = "<group>"; };
+		E91587F31999F493000DB78E /* flower.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = flower.jpg; sourceTree = "<group>"; };
+		E91587F51999F83F000DB78E /* hanamaru.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = hanamaru.jpeg; sourceTree = "<group>"; };
+		E91587FA1999FBC4000DB78E /* heart2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = heart2.png; sourceTree = "<group>"; };
+		E91587FB1999FBC4000DB78E /* heart3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = heart3.png; sourceTree = "<group>"; };
+		E91587FC1999FBC4000DB78E /* heart4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = heart4.png; sourceTree = "<group>"; };
+		E91588001999FC3E000DB78E /* heart1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = heart1.png; sourceTree = "<group>"; };
 		E935ABC818FFBCD500A48214 /* 100SquareCalc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = 100SquareCalc.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E935ABCB18FFBCD500A48214 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		E935ABCD18FFBCD500A48214 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -114,6 +126,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E91587F91999FB5E000DB78E /* photos */ = {
+			isa = PBXGroup;
+			children = (
+				E91588001999FC3E000DB78E /* heart1.png */,
+				E91587FA1999FBC4000DB78E /* heart2.png */,
+				E91587FB1999FBC4000DB78E /* heart3.png */,
+				E91587FC1999FBC4000DB78E /* heart4.png */,
+				E9AB34F919783ECC00B54105 /* timeLabel.png */,
+				E9AB34F719783EC600B54105 /* scoreLabel.png */,
+				E9AB34F5197802EF00B54105 /* buttonTextColor.png */,
+				E9AB34F31977FC4100B54105 /* backgroundLeft.png */,
+				E9AB34F11977F66600B54105 /* titleColor.png */,
+				E9AB34EF1977AD9A00B54105 /* husen.png */,
+				E9AB34ED1977AC7A00B54105 /* welcomeBackground.png */,
+				E91587F31999F493000DB78E /* flower.jpg */,
+				E9AB34FF1978AD1500B54105 /* husen2.png */,
+				E9AB34FD1978A56100B54105 /* calcBackground.png */,
+				E91587F51999F83F000DB78E /* hanamaru.jpeg */,
+				E9AB34FB1978A35900B54105 /* keyboardColor.png */,
+				E91587F11999EAAD000DB78E /* selectButton.png */,
+			);
+			name = photos;
+			sourceTree = "<group>";
+		};
 		E935ABBF18FFBCD500A48214 = {
 			isa = PBXGroup;
 			children = (
@@ -154,24 +190,14 @@
 				E935ABE018FFBCD500A48214 /* Main_iPad.storyboard */,
 				E95C602219681EF400E67958 /* SelectOperatorVC.h */,
 				E95C602319681EF400E67958 /* SelectOperatorVC.m */,
-				E9AB34F919783ECC00B54105 /* timeLabel.png */,
-				E9AB34F719783EC600B54105 /* scoreLabel.png */,
-				E9AB34F5197802EF00B54105 /* buttonTextColor.png */,
-				E9AB34F31977FC4100B54105 /* backgroundLeft.png */,
-				E9AB34F11977F66600B54105 /* titleColor.png */,
-				E9AB34EF1977AD9A00B54105 /* husen.png */,
-				E9AB34ED1977AC7A00B54105 /* welcomeBackground.png */,
 				E935ABE318FFBCD500A48214 /* TKBViewController.h */,
 				E935ABE418FFBCD500A48214 /* TKBViewController.m */,
-				E9AB34FF1978AD1500B54105 /* husen2.png */,
-				E9AB34FD1978A56100B54105 /* calcBackground.png */,
 				E935AC0318FFBDD800A48214 /* MMKeyboard.h */,
 				E935AC0418FFBDD800A48214 /* MMKeyboard.m */,
-				E9AB34FB1978A35900B54105 /* keyboardColor.png */,
 				E9CDF1351906309D0049E5B4 /* MMSquareCalc.h */,
 				E9CDF1361906309D0049E5B4 /* MMSquareCalc.m */,
+				E91587F91999FB5E000DB78E /* photos */,
 				E935ABE618FFBCD500A48214 /* Images.xcassets */,
-				E91587F11999EAAD000DB78E /* selectButton.png */,
 				E935ABD218FFBCD500A48214 /* Supporting Files */,
 			);
 			path = 100SquareCalc;
@@ -289,17 +315,23 @@
 				E9AB34FE1978A56100B54105 /* calcBackground.png in Resources */,
 				E935ABE218FFBCD500A48214 /* Main_iPad.storyboard in Resources */,
 				E9AB34F819783EC700B54105 /* scoreLabel.png in Resources */,
+				E91587FD1999FBC4000DB78E /* heart2.png in Resources */,
 				E9A1368F1934E907004CCC50 /* icon.png in Resources */,
 				E9AB34F21977F66600B54105 /* titleColor.png in Resources */,
 				E9AB35001978AD1500B54105 /* husen2.png in Resources */,
+				E91587F41999F493000DB78E /* flower.jpg in Resources */,
 				E9AB34F01977AD9A00B54105 /* husen.png in Resources */,
 				E9AB34FC1978A35900B54105 /* keyboardColor.png in Resources */,
 				E9AB34EE1977AC7A00B54105 /* welcomeBackground.png in Resources */,
+				E91587FE1999FBC4000DB78E /* heart3.png in Resources */,
+				E91588011999FC3E000DB78E /* heart1.png in Resources */,
 				E935ABE718FFBCD500A48214 /* Images.xcassets in Resources */,
 				E935ABDF18FFBCD500A48214 /* Main_iPhone.storyboard in Resources */,
 				E9AB34F41977FC4100B54105 /* backgroundLeft.png in Resources */,
 				E9AB34F6197802EF00B54105 /* buttonTextColor.png in Resources */,
+				E91587F61999F83F000DB78E /* hanamaru.jpeg in Resources */,
 				E935ABD618FFBCD500A48214 /* InfoPlist.strings in Resources */,
+				E91587FF1999FBC4000DB78E /* heart4.png in Resources */,
 				E9AB34FA19783ECC00B54105 /* timeLabel.png in Resources */,
 				E91587F21999EAAD000DB78E /* selectButton.png in Resources */,
 			);
