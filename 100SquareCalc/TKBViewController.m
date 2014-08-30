@@ -44,6 +44,8 @@
     
     UISegmentedControl *inputSc;
     BOOL backFlag;
+    BOOL ChangeCurrentKeyboardNumberFlag;
+    BOOL deleteKeyEnabled;
     
 }
 
@@ -55,6 +57,8 @@
 {
     [super viewDidLoad];
     backFlag = NO;
+    ChangeCurrentKeyboardNumberFlag = YES;
+    deleteKeyEnabled = NO;
     score = 0;
 	
 //各init
@@ -361,12 +365,21 @@
                             [button setTitleColor:normalButtonColor forState:UIControlStateDisabled];
                         }
                     }
+                    deleteKeyEnabled = YES;
+                    
+                    for (int i = 0; i < 8; i++) {
+                        if (i % 2 == 1 || i == 4) {
+                            UIButton *button = arrowKeyboard.KeyboardButtons[i];
+                            button.enabled = YES;
+                        }
+                    }
                     
                     UIButton *button = numberKeyboard.KeyboardButtons[0];
                     currentKeyboardNumber = 0;
                     button.backgroundColor = [UIColor colorWithRed:0 green:1.0 blue:0 alpha:0.5];
                     currentKeyboardButton = button;
                 
+                    
                 }
                 UIImageView *view = hearts[0];
                 view.hidden = YES;
@@ -399,6 +412,12 @@
                             UIButton *button = numberKeyboard.KeyboardButtons[i];
                             [button setTitleColor:disabledButtonColor forState:UIControlStateDisabled];
                         }
+                    }
+                    deleteKeyEnabled = NO;
+                    
+                    for (int i = 0; i < 8; i++) {
+                        UIButton *button = arrowKeyboard.KeyboardButtons[i];
+                        button.enabled = NO;
                     }
                 }
             
@@ -472,8 +491,12 @@
             break;
             
         case NUMBERKEYBOARD_delete: //けす
-            [ms deleteCharactersInRange:NSMakeRange([currentSquareLabel.text length] - 1, 1)];
-            currentSquareLabel.text = ms;
+            if (currentArrowSelected == CURRENTARROW_keyboard && !deleteKeyEnabled) {
+                
+            } else {
+                [ms deleteCharactersInRange:NSMakeRange([currentSquareLabel.text length] - 1, 1)];
+                currentSquareLabel.text = ms;
+            }
             break;
             
         default:
@@ -518,11 +541,30 @@
     
     if ((([rightAnswer length] == 1 && [currentSquareLabel.text length] == 1) || ([rightAnswer length] == 2 && [currentSquareLabel.text length] == 2) || [currentSquareLabel.text isEqualToString:@"0"])) {
         if (currentSquareNumber == 99) {
-            //[self numberButtonPressed:numberKeyboard.KeyboardButtons[NUMBERKEYBOARD_state]];
+            for (int i = 0; i < 12; i++) {
+                if (i != 11) {
+                    UIButton *button = numberKeyboard.KeyboardButtons[i];
+                    button.enabled = NO;
+                }
+            }
+            
+            for (int i = 0; i < 9; i++) {
+                UIButton *button = arrowKeyboard.KeyboardButtons[i];
+                button.enabled = NO;
+            }
             
         } else {
-            [self arrowButtonPressed:arrowKeyboard.KeyboardButtons[ARROWKEYBOARD_right]];
-            backFlag = NO;
+            if (currentArrowSelected == CURRENTARROW_square) {
+                [self arrowButtonPressed:arrowKeyboard.KeyboardButtons[ARROWKEYBOARD_right]];
+                backFlag = NO;
+            } else {
+                ChangeCurrentKeyboardNumberFlag = NO;
+                [self arrowButtonPressed:arrowKeyboard.KeyboardButtons[ARROWKEYBOARD_key]];
+                [self arrowButtonPressed:arrowKeyboard.KeyboardButtons[ARROWKEYBOARD_right]];
+                [self arrowButtonPressed:arrowKeyboard.KeyboardButtons[ARROWKEYBOARD_key]];
+                ChangeCurrentKeyboardNumberFlag = YES;
+                backFlag = NO;
+            }
         }
     }
     
@@ -594,40 +636,51 @@
             //色変える
                 numberKeyboard.backgroundColor = [UIColor colorWithRed:0 green:0.5 blue:0.5 alpha:0.07];
                 squareBoard.backgroundColor = [UIColor clearColor];
-            //enter復活
-                UIButton *button = arrowKeyboard.KeyboardButtons[ARROWKEYBOARD_enter];
-                button.enabled = YES;
             //numberKeyboard is disabled.
                 for (int i = 0; i < 12; i++) {
                     UIButton *button = numberKeyboard.KeyboardButtons[i];
                     button.enabled = NO;
-                    [button setTitleColor:normalButtonColor forState:UIControlStateDisabled];
                 }
-                
-                if (state != STATE_play) {
+            //numberKeyboard 色変え
+                if (state == STATE_play) {
+                    for (int i = 0; i < 12; i++) {
+                        UIButton *button = numberKeyboard.KeyboardButtons[i];
+                        [button setTitleColor:normalButtonColor forState:UIControlStateDisabled];
+                    }
+                    deleteKeyEnabled = YES;
+                    
+                    for (int i = 0; i < 8; i++) {
+                        if (i % 2 == 1 || i == 4) {
+                            UIButton *button = arrowKeyboard.KeyboardButtons[i];
+                            button.enabled = YES;
+                        }
+                    }
+                } else {
                     for (int i = 0; i < 12; i++) {
                         UIButton *button = numberKeyboard.KeyboardButtons[i];
                         [button setTitleColor:disabledButtonColor forState:UIControlStateDisabled];
                     }
+                    deleteKeyEnabled = NO;
                 }
                 
-                for (int i = 0; i < 8; i++) {
-                    if (i % 2 == 1) {
-                        UIButton *button = arrowKeyboard.KeyboardButtons[i];
-                        button.enabled = YES;
-                    }
-                }
+                
                 
                 //currentKeyboard set
                 if (state == STATE_play) {
-                    button = numberKeyboard.KeyboardButtons[0];
-                    currentKeyboardNumber = 0;
-                    button.backgroundColor = [UIColor colorWithRed:0 green:1.0 blue:0 alpha:0.5];
+                    if (ChangeCurrentKeyboardNumberFlag) {
+                        UIButton *button = numberKeyboard.KeyboardButtons[0];
+                        currentKeyboardNumber = 0;
+                        button.backgroundColor = [UIColor colorWithRed:0 green:1.0 blue:0 alpha:0.5];
+                        currentKeyboardButton = button;
+                    } else {
+                        UIButton *button = numberKeyboard.KeyboardButtons[currentKeyboardNumber];
+                        button.backgroundColor = [UIColor colorWithRed:0 green:1.0 blue:0 alpha:0.5];
+                    }
                 } else {
-                    button = numberKeyboard.KeyboardButtons[9];
+                    UIButton *button = numberKeyboard.KeyboardButtons[9];
                     currentKeyboardNumber = 9;
+                    currentKeyboardButton = button;
                 }
-                currentKeyboardButton = button;
             }
                 
             default:
@@ -728,6 +781,7 @@
                             [button setTitleColor:disabledButtonColor forState:UIControlStateDisabled];
                         }
                     }
+                    deleteKeyEnabled = NO;
                 }
                 currentKeyboardButton.backgroundColor = [UIColor whiteColor];
             }
@@ -758,20 +812,24 @@
                     [button setTitleColor:disabledButtonColor forState:UIControlStateDisabled];
                 }
             }
+            deleteKeyEnabled = NO;
         } else if(state == STATE_play){
             for (int i = 0; i < 12; i++) {
                     UIButton *button = numberKeyboard.KeyboardButtons[i];
                     [button setTitleColor:normalButtonColor forState:UIControlStateDisabled];
             }
+            deleteKeyEnabled = YES;
         }
     
     //文字がない時はけすボタン消滅
         if ([currentSquareLabel.text length] == 0) {
             UIButton *button =numberKeyboard.KeyboardButtons[11];
             [button setTitleColor:disabledButtonColor forState:UIControlStateDisabled];
+            deleteKeyEnabled = NO;
         } else {
             UIButton *button =numberKeyboard.KeyboardButtons[11];
             [button setTitleColor:normalButtonColor forState:UIControlStateDisabled];
+            deleteKeyEnabled = YES;
         }
     }
     
